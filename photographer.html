@@ -1,45 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
-  
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <title>Fisheye - photographe</title>
   </head>
 
   <body>
-
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html" title="Fisheye Home page">
+        <img src="assets/images/logo.png" class="logo" alt="fisheye logo" />
+      </a>
     </header>
 
     <main id="main">
-      <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <div class="photograph_header">
+        <div class="description_photographer">
+          <h1 class="firstname_Photographer">Mimi Keel</h1>
+          <h2 class="localisation_Photographer">London, UK</h2>
+          <p class="citation_Photographer">Voir le beau dans le quotidien.</p>
+        </div>
+        <button class="contact_button" onclick="displayModal()">
+          Contactez-moi
+        </button>
+        <div class="headPicture_Photographer">1</div>
       </div>
     </main>
-    
-    <div id="contact_modal">
-			<div class="modal">
 
-				<header>
+    <section>
+      <label for="filter-select">Trier par</label>
+        <select name="filters" id="filter-select" class="container-filter-select">
+          <option class="filter-by-popularity" value="popularity">Popularité</option>
+          <option class="filter-by-date" value="date">Date</option>
+          <option class="filter-by-title" value="title">Titre</option>
+        </select>
+    </section>
+
+    <div id="contact_modal">
+      <div class="modal">
+        <header>
           <h2>Contactez-moi</h2>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
 
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
+        <form>
+          <div>
+            <label for="firstname">Prénom</label>
+            <input type="text" name="firstname" id="firstname" />
+            <label for="surname">Nom</label>
+            <input type="text" name="surname" id="surname" />
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" />
+            <label for="contact_message">Votre message</label>
+            <input type="text" name="contact_message" id="contact_message" />
+          </div>
+          <button type="submit" class="contact_button">Envoyer</button>
+        </form>
+      </div>
+    </div>
 
-			</div>
-		</div>
-    
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>

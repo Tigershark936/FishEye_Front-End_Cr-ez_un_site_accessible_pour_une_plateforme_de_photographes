@@ -47,7 +47,7 @@
             
             userCardDOM.innerHTML = `
             <img src="assets/photographers/Sample-photos/Photographers-ID-Photos/${photographer.portrait}" alt="${photographer.name}">
-            <h1>${photographer.name}</h1>
+            <h2>${photographer.name}</h2>
             <p>${photographer.city}, ${photographer.country}</p>
             <p>${photographer.tagline}</p>
             <p>${photographer.price}€/jour</p>
@@ -63,8 +63,6 @@
 
         console.log(data.photographers); // affiche un tableau de photographes
         
-
-        const { photographers } = await getPhotographers();
         displayData(data.photographers); //Le tableau s'active ici
     }
     
