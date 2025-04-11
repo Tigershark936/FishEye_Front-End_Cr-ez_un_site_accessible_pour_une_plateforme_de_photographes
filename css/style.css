@@ -14,7 +14,7 @@ header {
     height: 90px;
 }
 
-h1 {
+header h1 {
     color: #901C1C;
     margin-right: 100px;
 }
@@ -50,4 +50,11 @@ h1 {
     width: 200px;
     border-radius: 9999px;
     object-fit: cover;
+}
+
+option{
+    width: 170px;
+    height: 69px;
+    background-color: blue;
+    border-bottom: 1px solid yellow;
 }
