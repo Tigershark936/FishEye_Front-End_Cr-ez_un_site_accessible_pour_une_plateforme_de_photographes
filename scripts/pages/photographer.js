@@ -1,4 +1,7 @@
 //Mettre le code JavaScript lié à la page photographer.html
+import { galeryPhotographer } from '../components/galery.js';
+import { dropdownOpenList } from '../utils/selectFilter.js';
+
 
 //Crée un objet pour lire les paramètres de l’URL
 const params = new URLSearchParams(window.location.search);
@@ -9,6 +12,7 @@ const photographerId = params.get("id");
 function constructPhotographerPage(photograph){
 
     const main = document.getElementById('main');
+
 
     // Création du header du photographe
     const photographHeader = document.createElement('div');
@@ -56,6 +60,12 @@ function constructPhotographerPage(photograph){
     const photographPictureImage = document.createElement('img');
     photographPictureImage.src = `assets/photographers/Sample-photos/Photographers-ID-Photos/${photograph.portrait}`;
     photographPicture.appendChild(photographPictureImage);
+
+    //Appele ici le selecteur de trie
+    dropdownOpenList(main, photograph);
+    // Appelle ici la galerie
+    galeryPhotographer(main, photograph);
+
 }
 
 
@@ -76,4 +86,6 @@ const fetchPhotographer = (id) => {
     });
 }
 
-fetchPhotographer(photographerId);
+document.addEventListener("DOMContentLoaded", () => {
+    fetchPhotographer(photographerId);
+});

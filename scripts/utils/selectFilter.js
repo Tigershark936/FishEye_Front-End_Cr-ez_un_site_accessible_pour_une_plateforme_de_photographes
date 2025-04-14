@@ -1,14 +1,14 @@
 // Création de la section selected-filter
 
 
-function dropdownOpenList() {
-    const section = document.createElement("section");
-    section.classList.add('section');
+export function dropdownOpenList(main) {
+    const sectionLabel = document.createElement("section");
+    sectionLabel.classList.add('section');
 
      // Création du label pour trier
     const labelSortBy = document.createElement("label");
     labelSortBy.textContent = `Trier par`;
-    section.appendChild(labelSortBy);
+    sectionLabel.appendChild(labelSortBy);
 
      // Création du select
     const selectLabelSortBy = document.createElement('select');
@@ -16,7 +16,7 @@ function dropdownOpenList() {
     selectLabelSortBy.id = 'filter-select';
     selectLabelSortBy.className = 'container-filter-select';
     selectLabelSortBy.classList.add('section__select');
-    section.appendChild(selectLabelSortBy);
+    sectionLabel.appendChild(selectLabelSortBy);
 
     // Liste des options à ajouter au selectLabelSortBy
     const options = [
@@ -34,8 +34,8 @@ function dropdownOpenList() {
         selectLabelSortBy.appendChild(option);
     });
 
-    // On ajoute tout dans le body
-    document.body.appendChild(section);
+    // // On ajoute dans le main la section label
+    main.appendChild(sectionLabel);
 }
 
-dropdownOpenList();
+

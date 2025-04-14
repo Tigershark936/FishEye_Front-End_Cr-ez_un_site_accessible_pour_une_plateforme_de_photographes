@@ -8,10 +8,12 @@
     display: none;
 }
 
+main{
+    margin: 0 100px;
+}
 .photograph{
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,6 +73,7 @@
         width: 170px;
         height: 69px;
         margin-top: 9px;
+        margin-left: 25px;
         border-radius: 5px;
         background: rgba(144, 28, 28, 1);
         color: rgba(255, 255, 255, 1);
@@ -88,6 +91,40 @@
         }
       }
 }
+
+.galery{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 95px;
+    margin-top: 23px;
+
+    .element_galery{
+        width: 350px;
+        height: 351px;
+        background-color: gold;
+    
+        img{
+            width: 350px;
+            height: 300px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+    .info-img{
+        padding-top: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        h3{
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #901C1C;
+        }
+    }
+
+    }
+}
+
 
 
 .modal {

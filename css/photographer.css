@@ -12,10 +12,13 @@
   display: none;
 }
 
+main {
+  margin: 0 100px;
+}
+
 .photograph {
   background-color: #FAFAFA;
   height: 300px;
-  margin: 0 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,6 +68,7 @@
   width: 170px;
   height: 69px;
   margin-top: 9px;
+  margin-left: 25px;
   border-radius: 5px;
   background: rgb(144, 28, 28);
   color: rgb(255, 255, 255);
@@ -79,6 +83,35 @@
   height: 69px;
   background-color: blue;
   border-bottom: 1px solid yellow;
+}
+
+.galery {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 95px;
+  margin-top: 23px;
+}
+.galery .element_galery {
+  width: 350px;
+  height: 351px;
+  background-color: gold;
+}
+.galery .element_galery img {
+  width: 350px;
+  height: 300px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+.galery .element_galery .info-img {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.galery .element_galery .info-img h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #901C1C;
 }
 
 .modal {
