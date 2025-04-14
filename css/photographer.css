@@ -6,6 +6,16 @@
 
 #contact_modal {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 69px;
+  background-color: rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 100;
 }
 
 #contact_modal {
@@ -61,7 +71,6 @@ main {
 }
 
 .section {
-  margin: 0 100px;
   font-weight: 700;
 }
 .section__select {
@@ -117,7 +126,7 @@ main {
 .modal {
   border-radius: 5px;
   background-color: #DB8876;
-  width: 50%;
+  width: 669px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,6 +156,18 @@ form {
   flex-direction: column;
   align-items: flex-start;
 }
+form .contact_button {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 11px;
+  width: 170px;
+  height: 70px;
+  border: none;
+  background-color: #901C1C;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 form label {
   color: #312E2E;
@@ -166,6 +187,10 @@ form input {
   height: 68px;
   border: none;
   border-radius: 5px;
+}
+
+input#contact_message {
+  height: 170px;
 }
 
 /*# sourceMappingURL=photographer.css.map */

@@ -2,6 +2,16 @@
 
 #contact_modal {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 69px; // pousse le contenu sans affecter le fond
+    background-color: rgba(0, 0, 0, 0.25); // fond sombre
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 100;
 }
 
 #contact_modal {
@@ -37,7 +47,7 @@ main{
         }
     }
 
-    button {
+    button{
         font-size: 20px;
         font-weight: bold;
         color: white;
@@ -66,7 +76,6 @@ main{
 
 
 .section{
-    margin: 0 100px;
     font-weight: 700;
     
     &__select {
@@ -130,7 +139,7 @@ main{
 .modal {
     border-radius: 5px;
     background-color: #DB8876;
-    width: 50%;
+    width: 669px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,6 +168,20 @@ form {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
+
+    .contact_button {
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        padding: 11px;
+        width: 170px;
+        height: 70px;
+        border: none;
+        background-color: #901C1C;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
 }
 
 form label {
@@ -180,3 +203,7 @@ form input {
     border: none;
     border-radius: 5px;
 }
+
+input#contact_message {
+    height: 170px;
+  }

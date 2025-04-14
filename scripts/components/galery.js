@@ -6,7 +6,7 @@ export function galeryPhotographer(main){
     
 
     // // Encode le nom du photographe pour l’URL (ex : "Ellie Rose" => "Ellie%20Rose")
-    // const folderName = encodeURIComponent(photograph.name);
+    // const folderNamePhotographer = encodeURIComponent(photograph.name);
 
     // Créer un tableau contenant tous les chemins d'images à afficher
     const slideshow = [
@@ -55,4 +55,8 @@ export function galeryPhotographer(main){
 }
 
 
-    
+const fetchGaleryPhotographer = (id) =>{
+    fetch("../../data/photographers.json").then((data) =>{
+        
+    }
+)}
