@@ -8,7 +8,8 @@
 
 body {
     font-family: "DM Sans", sans-serif;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 1440px;
 }
 
 
@@ -47,7 +48,7 @@ h1 {
 
 .photographer_section article h2 {
     color: #D3573C;
-    font-size: 36px;
+    font-size: 2.25rem;
     font-weight: 400;
 }
 
@@ -56,4 +57,20 @@ h1 {
     width: 200px;
     border-radius: 9999px;
     object-fit: cover;
+    transform-origin: center; 
+}
+
+.photographer_section h3{
+    color: #901C1C;
+    font-size: 0.813rem;
+}
+
+.photographer_section h4{
+    font-size: 0.625rem;
+    font-weight: 400;
+}
+
+.photographer_section p{
+    font-size: 0.563rem;
+    color: #757575;
 }

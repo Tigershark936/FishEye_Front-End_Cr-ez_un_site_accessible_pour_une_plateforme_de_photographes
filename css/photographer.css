@@ -71,35 +71,71 @@ main {
 }
 
 .section {
+  display: flex;
   font-weight: 700;
+  justify-content: flex-start;
+  align-items: center;
 }
-.section__select {
+.section .sortBy {
+  font-size: 1.125rem;
+}
+.section .dropdown {
   width: 170px;
-  height: 69px;
-  margin-top: 9px;
   margin-left: 25px;
-  border-radius: 5px;
+  margin-top: 9px;
   background: rgb(144, 28, 28);
   color: rgb(255, 255, 255);
   font-weight: 700;
   font-size: 1.125rem;
+  border-radius: 5px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding-left: 20px;
-  border: none;
+  position: relative;
+  cursor: pointer;
+  outline: none;
 }
-.section__select option {
-  width: 170px;
+.section .dropdown__selected {
   height: 69px;
-  background-color: blue;
-  border-bottom: 1px solid yellow;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 10px;
+  justify-content: space-between;
+}
+.section .dropdown__selected .chevron {
+  font-size: 1rem;
+}
+.section .dropdown__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgb(144, 28, 28);
+  border-radius: 5px;
+  margin-top: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+.section .dropdown__list li {
+  height: 69px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  border-top: 1px solid white;
+  cursor: pointer;
+}
+.section .dropdown__list li:hover {
+  background-color: #DB8876;
+}
+.section .dropdown__list.hidden {
+  display: none;
 }
 
 .galery {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 95px;
-  margin-top: 23px;
+  margin-top: 20px;
 }
 .galery .element_galery {
   width: 350px;
@@ -112,12 +148,13 @@ main {
   border-radius: 5px;
   object-fit: cover;
 }
+.galery .element_galery img:active {
+  transform: scale(2);
+}
 .galery .element_galery .info-img {
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
-}
-.galery .element_galery .info-img h3 {
   font-size: 1.5rem;
   font-weight: 400;
   color: #901C1C;

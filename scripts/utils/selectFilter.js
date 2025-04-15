@@ -2,40 +2,84 @@
 
 
 export function dropdownOpenList(main) {
-    const sectionLabel = document.createElement("section");
-    sectionLabel.classList.add('section');
+    // Création du conteneur principal (section)
+    const sectionSortBy = document.createElement("section");
+    sectionSortBy.classList.add("section");
 
-     // Création du label pour trier
-    const labelSortBy = document.createElement("label");
-    labelSortBy.textContent = `Trier par`;
-    sectionLabel.appendChild(labelSortBy);
+    // Ajout du label "Trier par"
+    const divSortBy = document.createElement("SortBy");
+    divSortBy.textContent = `Trier par`;
+    sectionSortBy.appendChild(divSortBy);
 
-     // Création du select
-    const selectLabelSortBy = document.createElement('select');
-    selectLabelSortBy.name = 'filters';
-    selectLabelSortBy.id = 'filter-select';
-    selectLabelSortBy.className = 'container-filter-select';
-    selectLabelSortBy.classList.add('section__select');
-    sectionLabel.appendChild(selectLabelSortBy);
+    // Création du composant dropdown
+    const dropdown = document.createElement("div");
+    dropdown.classList.add("dropdown");
+    dropdown.tabIndex = 0;
+    sectionSortBy.appendChild(dropdown);
 
-    // Liste des options à ajouter au selectLabelSortBy
+    // Élément affiché par défaut (sélection actuelle)
+    const selected = document.createElement("div");
+    selected.classList.add("dropdown__selected");
+    let currentSelected = 'popularity';
+    selected.innerHTML = `Popularité <i class="fa-solid fa-angle-down"></i>`;
+    dropdown.appendChild(selected);
+    
+
+    // Liste déroulante
+    const list = document.createElement("ul");
+    list.classList.add("dropdown__list", "hidden");
+    dropdown.appendChild(list);
+
+    // Options disponibles
     const options = [
-        { className: 'filter-by-popularity', value: 'popularity', text: 'Popularité' },
-        { className: 'filter-by-date', value: 'date', text: 'Date' },
-        { className: 'filter-by-title', value: 'title', text: 'Titre' }
+        { value: 'popularity', text: 'Popularité' },
+        { value: 'date', text: 'Date' },
+        { value: 'title', text: 'Titre' }
     ];
 
-    // Boucle pour créer et ajouter les options
-    options.forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt.value;
-        option.textContent = opt.text;
-        option.className = opt.className;
-        selectLabelSortBy.appendChild(option);
+    // Fonction pour rendre les options sélectionnées (en cachant l'actuelle)
+    function renderList(selectedValue) {
+        list.innerHTML = '';
+        options.forEach(opt => {
+            if (opt.value !== selectedValue) {
+                const li = document.createElement("li");
+                li.dataset.value = opt.value;
+                li.textContent = opt.text;
+
+
+                li.addEventListener("click", () => {
+                    currentSelected = opt.value;
+                    selected.innerHTML = `${opt.text} <i class="chevron fa-solid fa-angle-up"></i>`;
+                    renderList(currentSelected);
+                    list.classList.toggle("hidden");
+                });
+                list.appendChild(li);
+            }
+        });
+    }
+
+    // Appel initial
+    renderList(currentSelected);
+
+    // Gestion de l'ouverture/fermeture du menu
+    selected.addEventListener("click", () => {
+        list.classList.toggle("hidden");
+        const isOpen = list.classList.includes("hidden");
+        const currentText = selected.textContent.trim().split(" ")[0];
+        let chevronClass;
+            if (isOpen) {
+            chevronClass = 'fa-angle-up';
+            } else {
+            chevronClass = 'fa-angle-down';
+            }
+        selected.innerHTML = `${currentText} <i class="chevron fa-solid ${chevronClass}"></i>`;
     });
 
-    // // On ajoute dans le main la section label
-    main.appendChild(sectionLabel);
+    dropdown.addEventListener("blur", () => {
+        list.classList.add("hidden");
+        const currentText = selected.textContent.trim().split(" ")[0];
+        selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
+    });
+
+    main.appendChild(sectionSortBy);
 }
-
-

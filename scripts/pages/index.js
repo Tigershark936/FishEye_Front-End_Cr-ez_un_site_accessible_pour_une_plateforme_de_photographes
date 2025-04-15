@@ -48,8 +48,8 @@
             userCardDOM.innerHTML = `
             <img src="assets/photographers/Sample-photos/Photographers-ID-Photos/${photographer.portrait}" alt="${photographer.name}">
             <h2>${photographer.name}</h2>
-            <p>${photographer.city}, ${photographer.country}</p>
-            <p>${photographer.tagline}</p>
+            <h3>${photographer.city}, ${photographer.country}</h3>
+            <h4>${photographer.tagline}</h4>
             <p>${photographer.price}€/jour</p>
             `
             photographersSection.appendChild(userCardDOM);

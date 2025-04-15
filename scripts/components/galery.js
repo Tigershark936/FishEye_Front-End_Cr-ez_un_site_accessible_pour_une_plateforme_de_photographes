@@ -3,10 +3,7 @@
 export function galeryPhotographer(main){
     const sectionGalery = document.createElement('section');
     sectionGalery.classList.add('galery');
-    
 
-    // // Encode le nom du photographe pour l’URL (ex : "Ellie Rose" => "Ellie%20Rose")
-    // const folderNamePhotographer = encodeURIComponent(photograph.name);
 
     // Créer un tableau contenant tous les chemins d'images à afficher
     const slideshow = [
@@ -36,16 +33,23 @@ export function galeryPhotographer(main){
     pictureVideoGalery.classList.add('element_galery','img');
     elementGalery.appendChild(pictureVideoGalery);
 
+     // Fonction pour agrandir les slides de la galerie (en cliquant dessus)
+     function clickSlides(slideElement) {
+        slideElement.addEventListener('click', () => {
+            slideElement.classList.add('active');
+        });
+    }
+
     // Rajout du title de elementGalery
     const txtElement = document.createElement('h3');
     txtElement.textContent = `ARC-EN-CIEL`
     txtElement.classList.add('info-img','h3')
     elementGalery.appendChild(txtElement)
 
-    // Rajout du heart de elementGalery
+    // Rajout du heart de txtElement
     const heart = document.createElement('div')
-    heart.classList.add('like')
-    elementGalery.appendChild(heart)
+    heart.innerHTML = `11 <i class="fa-solid fa-heart"></i>`;
+    txtElement.appendChild(heart)
     });
 
 
