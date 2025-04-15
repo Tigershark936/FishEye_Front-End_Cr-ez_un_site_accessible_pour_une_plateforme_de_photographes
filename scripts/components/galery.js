@@ -1,10 +1,16 @@
 // Creation de la section galery
 
-export function galeryPhotographer(main){
+
+export function galeryPhotographer(main, medias){
     const sectionGalery = document.createElement('section');
     sectionGalery.classList.add('galery');
 
-
+    function mediaGalery(media){
+        const { id, photographerId, title, image, likes, date, price} = media;
+            console.log(media);
+    
+        const slidesElements = `assets/photographers/Sample-photos/${image}`;
+    }
     // Créer un tableau contenant tous les chemins d'images à afficher
     const slideshow = [
         `assets/photographers/Sample-photos/Ellie%20Rose/Architecture_Connected_Curves.jpg`,
@@ -57,10 +63,3 @@ export function galeryPhotographer(main){
     main.appendChild(sectionGalery);
     
 }
-
-
-const fetchGaleryPhotographer = (id) =>{
-    fetch("../../data/photographers.json").then((data) =>{
-        
-    }
-)}

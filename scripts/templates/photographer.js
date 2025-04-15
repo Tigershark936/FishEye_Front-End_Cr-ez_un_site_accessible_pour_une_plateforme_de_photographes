@@ -1,4 +1,4 @@
-function photographerTemplate(data) {
+function photographerTemplate(data, index) {
     const { name, portrait, id, city, country, tagline, price} = data;
     console.log(data);
     
@@ -7,19 +7,30 @@ function photographerTemplate(data) {
 
     function getUserCardDOM() {
         const a = document.createElement('a')
+        // permet d'allez sur la page du photographe concerné en utilisant sa data.id "?id${id}"
         a.setAttribute("href", `http://127.0.0.1:5500/photographer.html?id=${id}`)
+
         const article = document.createElement('article');
+
         const img = document.createElement('img');
         img.setAttribute("src", picture)
+        img.classList.add('photographer_section');// class commune à toutes
+        img.classList.add(`img-style-${index}`);// class unique selon l’index
+
+        // Création du texte pour l'article
         const h2Name = document.createElement('h2');
         h2Name.textContent = name;
+
         const h3Location = document.createElement('h3');
         h3Location.textContent = `${city}, ${country}`;
+
         const h4Tagline = document.createElement('h4');
         h4Tagline.textContent = `${tagline}`;
+
         const pPrice = document.createElement('p');
         pPrice.textContent = `${price}€/jour`;
 
+        // Organisation parents/enfants
         article.appendChild(img);
         article.appendChild(h2Name);
         article.appendChild(h3Location);
@@ -31,5 +42,5 @@ function photographerTemplate(data) {
 
         return(a);
     }
-    return { name, picture, getUserCardDOM }
+    return { name, picture, getUserCardDOM}
 }
