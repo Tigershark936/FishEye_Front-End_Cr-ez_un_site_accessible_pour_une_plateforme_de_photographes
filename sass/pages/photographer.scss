@@ -119,7 +119,6 @@ main{
         width: 100%;
         background: rgba(144, 28, 28, 1);
         border-radius: 5px;
-        margin-top: 5px;
         overflow: hidden;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         z-index: 10;
@@ -155,8 +154,9 @@ main{
         width: 350px;
         height: 351px;
         background-color: gold;
+        overflow: hidden;
     
-        img{
+        img, video{
             width: 350px;
             height: 300px;
             border-radius: 5px;

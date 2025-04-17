@@ -9,16 +9,24 @@ function photographerTemplate(data, index) {
         const a = document.createElement('a')
         // permet d'allez sur la page du photographe concerné en utilisant sa data.id "?id${id}"
         a.setAttribute("href", `http://127.0.0.1:5500/photographer.html?id=${id}`)
+        //On utilise aria-labelledby pour avoir une structure claire et sémantique
+        const nameId = `photographer-name-${id}`;
+        a.setAttribute("aria-labelledby", nameId); // Le lien sera nommé par le h2
 
+        // article = groupe logique d'infos sur un photographe
         const article = document.createElement('article');
+        article.setAttribute("role", "group");
+        article.setAttribute("aria-label", `Fiche du photographe ${name}`);
 
         const img = document.createElement('img');
         img.setAttribute("src", picture)
+        img.setAttribute("alt", `Portrait du photographe ${name}`);
         img.classList.add('photographer_section');// class commune à toutes
         img.classList.add(`img-style-${index}`);// class unique selon l’index
 
         // Création du texte pour l'article
         const h2Name = document.createElement('h2');
+        h2Name.setAttribute('id', nameId); // ID pour aria-labelledby
         h2Name.textContent = name;
 
         const h3Location = document.createElement('h3');

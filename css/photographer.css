@@ -111,7 +111,6 @@ main {
   width: 100%;
   background: rgb(144, 28, 28);
   border-radius: 5px;
-  margin-top: 5px;
   overflow: hidden;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 10;
@@ -141,14 +140,15 @@ main {
   width: 350px;
   height: 351px;
   background-color: gold;
+  overflow: hidden;
 }
-.galery .element_galery img {
+.galery .element_galery img, .galery .element_galery video {
   width: 350px;
   height: 300px;
   border-radius: 5px;
   object-fit: cover;
 }
-.galery .element_galery img:active {
+.galery .element_galery img:active, .galery .element_galery video:active {
   transform: scale(2);
 }
 .galery .element_galery .info-img {
