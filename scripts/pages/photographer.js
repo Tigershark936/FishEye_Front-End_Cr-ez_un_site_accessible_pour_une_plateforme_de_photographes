@@ -45,6 +45,7 @@ function constructPhotographerPage(photograph){
     // Création du bonton pour contacter le photographe
     const photographContactButton = document.createElement('button');
     photographContactButton.textContent = 'Contactez-moi';
+    photographContactButton.setAttribute("aria-label", `Contact Me`);
     photographHeader.appendChild(photographContactButton);
 
     // Ajout de l'écouteur d'événement pour ouvrir la modale afin de contacter 
@@ -54,12 +55,17 @@ function constructPhotographerPage(photograph){
     // Création de l'emplacement pour la photo du photographe
     const photographPicture = document.createElement('div');
     photographPicture.classList.add('photograph__picture');
+    photographDescription.setAttribute("alt", `Portrait du photographe ${name}`);
     photographHeader.appendChild(photographPicture);
 
     // Création de l'ajout de la photo du photographe dans la div 'photograph__picture'
     const photographPictureImage = document.createElement('img');
     photographPictureImage.src = `assets/photographers/Sample-photos/Photographers-ID-Photos/${photograph.portrait}`;
     photographPicture.appendChild(photographPictureImage);
+
+    const totalLikesAndPrice = document.createElement('div');
+    totalLikesAndPrice.classList.add('boxLikeAndPrice');
+    document.body.appendChild(totalLikesAndPrice)
 
     //Appele ici le selecteur de trie
     dropdownOpenList(main, photograph);

@@ -3,19 +3,19 @@
 
 export function dropdownOpenList(main) {
     // Création du conteneur principal (section)
-    const sectionSortBy = document.createElement("section");
-    sectionSortBy.classList.add("section");
+    const sectionOrderBy = document.createElement("section");
+    sectionOrderBy.classList.add("section");
 
     // Ajout du label "Trier par"
-    const divSortBy = document.createElement("SortBy");
-    divSortBy.textContent = `Trier par`;
-    sectionSortBy.appendChild(divSortBy);
+    const labelOrderby = document.createElement("label");
+    labelOrderby.textContent = `Trier par`;
+    sectionOrderBy.appendChild(labelOrderby);
 
     // Création du composant dropdown
     const dropdown = document.createElement("div");
     dropdown.classList.add("dropdown");
     dropdown.tabIndex = 0;
-    sectionSortBy.appendChild(dropdown);
+    sectionOrderBy.appendChild(dropdown);
 
     // Élément affiché par défaut (sélection actuelle)
     const selected = document.createElement("div");
@@ -81,5 +81,5 @@ export function dropdownOpenList(main) {
         selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
     });
 
-    main.appendChild(sectionSortBy);
+    main.appendChild(sectionOrderBy);
 }

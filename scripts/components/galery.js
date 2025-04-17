@@ -17,6 +17,9 @@ function getFolderName(photographerId) {
     }
 }
 
+// stocke les médias globaux pour le tri de la galerie
+let allMedias = [] 
+
 // Fonction qui récupère les médias du bon photographe et les affiche
 async function mediaGalery(main) {
     try {
@@ -69,10 +72,20 @@ async function mediaGalery(main) {
             txtElement.classList.add('info-img', 'h3');
             elementGalery.appendChild(txtElement);
 
+            // Boite à like de l'élémentGalery
+            const boxLike = document.createElement('div');
+            boxLike.classList.add('boxlike')
+            txtElement.appendChild(boxLike)
+
+            // Affichage du nombre de likes 
+            const numberLikes = document.createElement('p')
+            numberLikes.textContent = `${likes}`;
+            boxLike.appendChild(numberLikes)
+
             // affichage du cœur (likes statique pour l’instant)
             const heart = document.createElement('div');
-            heart.innerHTML = `${likes}<i class="fa-solid fa-heart"></i>`;
-            txtElement.appendChild(heart);
+            heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+            boxLike.appendChild(heart);
         });
 
         // On ajoute la galerie au main

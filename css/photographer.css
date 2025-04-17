@@ -76,7 +76,7 @@ main {
   justify-content: flex-start;
   align-items: center;
 }
-.section .sortBy {
+.section .label {
   font-size: 1.125rem;
 }
 .section .dropdown {
@@ -152,12 +152,26 @@ main {
   transform: scale(2);
 }
 .galery .element_galery .info-img {
-  padding-top: 10px;
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
   font-weight: 400;
   color: #901C1C;
+}
+.galery .element_galery .info-img .boxlike {
+  display: flex;
+  gap: 6.65px;
+}
+
+.boxLikeAndPrice {
+  position: fixed;
+  bottom: 0;
+  right: 36px;
+  background-color: #db8876;
+  width: 376px;
+  height: 89px;
+  border-radius: 5px 5px 0 0;
+  z-index: 100;
 }
 
 .modal {

@@ -81,7 +81,7 @@ main{
     justify-content: flex-start;
     align-items: center;
   
-    .sortBy {
+    .label {
       font-size: 1.125rem;
     }
   
@@ -168,18 +168,31 @@ main{
         }
 
     .info-img{
-        padding-top: 10px;
+        // padding-top: 10px;
         display: flex;
         justify-content: space-between;
         font-size: 1.5rem;
         font-weight: 400;
         color: #901C1C;
-    }
 
+        .boxlike{
+            display: flex;
+            gap: 6.65px;
+        }
+    }
     }
 }
 
-
+.boxLikeAndPrice{
+    position: fixed;
+    bottom: 0;
+    right: 36px;
+    background-color: #db8876;
+    width: 376px;
+    height: 89px;
+    border-radius: 5px 5px 0 0;
+    z-index: 100;
+}
 
 .modal {
     border-radius: 5px;
