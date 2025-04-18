@@ -15,7 +15,6 @@ function photographerTemplate(data, index) {
 
         // article = groupe logique d'infos sur un photographe
         const article = document.createElement('article');
-        article.setAttribute("role", "group");
         article.setAttribute("aria-label", `Fiche du photographe ${name}`);
 
         const containerPicture = document.createElement('div');

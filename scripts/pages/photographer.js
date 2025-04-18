@@ -1,5 +1,6 @@
 //Mettre le code JavaScript lié à la page photographer.html
 import { galeryPhotographer } from '../components/galery.js';
+import { mediaFactory } from '../components/galeryV2.js';
 import { dropdownOpenList } from '../utils/selectFilter.js';
 
 
@@ -71,6 +72,8 @@ function constructPhotographerPage(photograph){
     dropdownOpenList(main, photograph);
     // Appelle ici la galerie
     galeryPhotographer(main, photograph);
+    
+    mediaFactory(main, photograph)
 
 }
 
