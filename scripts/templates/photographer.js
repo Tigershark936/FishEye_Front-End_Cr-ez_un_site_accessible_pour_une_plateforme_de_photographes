@@ -18,11 +18,14 @@ function photographerTemplate(data, index) {
         article.setAttribute("role", "group");
         article.setAttribute("aria-label", `Fiche du photographe ${name}`);
 
+        const containerPicture = document.createElement('div');
+        containerPicture.classList.add('container_img');
+
         const img = document.createElement('img');
         img.setAttribute("src", picture)
         img.setAttribute("alt", `Portrait du photographe ${name}`);
-        img.classList.add('photographer_section');// class commune à toutes
         img.classList.add(`img-style-${index}`);// class unique selon l’index
+        
 
         // Création du texte pour l'article
         const h2Name = document.createElement('h2');
@@ -39,12 +42,12 @@ function photographerTemplate(data, index) {
         pPrice.textContent = `${price}€/jour`;
 
         // Organisation parents/enfants
-        article.appendChild(img);
+        article.appendChild(containerPicture)
         article.appendChild(h2Name);
-        article.appendChild(h3Location);
+        article.appendChild(h3Location);                
         article.appendChild(h4Tagline);
         article.appendChild(pPrice);
-
+        containerPicture.appendChild(img);
         // Ici on met l'article DANS le lien car a est le parent de acticle afin de click sur la page du photographe
         a.appendChild(article);
 
