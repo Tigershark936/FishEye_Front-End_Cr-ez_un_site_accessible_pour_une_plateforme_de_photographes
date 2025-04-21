@@ -83,6 +83,7 @@ main {
   width: 170px;
   margin-left: 25px;
   margin-top: 9px;
+  margin-bottom: 20px;
   background: rgb(144, 28, 28);
   color: rgb(255, 255, 255);
   font-weight: 700;
@@ -132,9 +133,8 @@ main {
 
 .galery {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 20px;
+  gap: 20px 95px;
 }
 .galery .element_galery {
   width: 350px;
