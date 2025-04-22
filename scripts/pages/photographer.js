@@ -1,19 +1,24 @@
 //Mettre le code JavaScript lié à la page photographer.html
-import { galeryPhotographer } from '../components/galery.js';
-import { mediaFactory } from '../components/galeryV2.js';
 import { dropdownOpenList } from '../utils/selectFilter.js';
 
+async function getPhotographers(){
+    const request = await fetch("../data/photographers.json");
+    const data = await request.json()
+    
+    //Retourne le tableau photographers 
+    return data.photographers;
+}
 
-//Crée un objet pour lire les paramètres de l’URL
-const params = new URLSearchParams(window.location.search);
-// Récupère la valeur du paramètre dans l'URL pour le stocker
-const photographerId = params.get("id");
+// permet de retrouver un photographe spécifique à partir de son id, en consultant le fichier photographers.json.
+async function getPhotographerById(id) {
+    const photographers = await getPhotographers();
+    return photographers.find((photographer) => photographer.id === parseInt(id, 10));
+}
 
 
-function constructPhotographerPage(photograph){
+async function constructPhotographerPage(photograph){
 
     const main = document.getElementById('main');
-
 
     // Création du header du photographe
     const photographHeader = document.createElement('div');
@@ -68,33 +73,42 @@ function constructPhotographerPage(photograph){
     totalLikesAndPrice.classList.add('boxLikeAndPrice');
     document.body.appendChild(totalLikesAndPrice)
 
+    const totalLikes = document.createElement('div');
+    totalLikes.classList.add('totalLike')
+    totalLikes.textContent = `297 081`;
+    totalLikesAndPrice.appendChild(totalLikes)
+
+    const heart = document.createElement('div');
+    heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    totalLikes.appendChild(heart);
+
+    const priceForDay = document.createElement('div');
+    priceForDay.classList.add('priceForDay')
+    priceForDay.innerHTML = `300/jours`;
+    totalLikesAndPrice.appendChild(priceForDay);
+
+
     //Appele ici le selecteur de trie
-    dropdownOpenList(main, photograph);
-    // Appelle ici la galerie
-    galeryPhotographer(main, photograph);
+    dropdownOpenList(photograph);
     
-    mediaFactory(main, photograph)
 
 }
 
 
+async function initPhotographerPage() {
+    const params = new URLSearchParams(window.location.search);
+    const photographerId = params.get("id");
 
-const fetchPhotographer = (id) => {
-    fetch("../../data/photographers.json").then((data) => {
-    
-        console.log('data', data);
-        data.json().then((json) => {
-            let photographData = json;
-            console.log('json', json);
-            const photograph = photographData.photographers.find((photographer) => photographer.id == id);
-            console.log('photograph', photograph);
-            constructPhotographerPage(photograph);
-        });
-    }).catch((error) => {
-        console.error('Error fetching photographer:', error);
-    });
+    try {
+        const photographer = await getPhotographerById(photographerId);
+        if (photographer) {
+            constructPhotographerPage(photographer);
+        } else {
+            console.error("Photographe non trouvé.");
+        }
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation de la page du photographe :", error);
+    }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchPhotographer(photographerId);
-});
+initPhotographerPage();

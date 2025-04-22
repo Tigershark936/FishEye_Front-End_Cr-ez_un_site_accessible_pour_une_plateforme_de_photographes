@@ -145,45 +145,70 @@ main{
 }
   
 
-.galery{
+.galery {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 95px; // 20px vertical, 95px horizontal
-
-    .element_galery{
+    gap: 20px 95px;
+  
+    .element_galery {
+      width: 350px;
+      height: 351px;
+      background-color: gold;
+      overflow: hidden;
+  
+      img, video {
         width: 350px;
-        height: 351px;
-        background-color: gold;
-        overflow: hidden;
-    
-        img, video{
-            width: 350px;
-            height: 300px;
-            border-radius: 5px;
-            object-fit: cover;
-
-            &:active{
-                transform: scale(2);
-            }
+        height: 300px;
+        border-radius: 5px;
+        object-fit: cover;
+  
+        &:active {
+          transform: scale(2);
         }
-
-    .info-img{
-        // padding-top: 10px;
+      }
+    }
+  
+      .info-img {
         display: flex;
         justify-content: space-between;
         font-size: 1.5rem;
         font-weight: 400;
         color: #901C1C;
-
-        .boxlike{
-            display: flex;
-            gap: 6.65px;
+  
+        .boxlike {
+          display: flex;
+          gap: 6.65px;
+          align-items: center;
+  
+          //Compteur à rouleau unique
+          .numberLikes-counter {
+            overflow: hidden;
+            height: 40px;
+            font-size: 32px;
+            line-height: 40px;
+            font-family: monospace;
+            width: auto;
+            display: inline-block;
+  
+            .digital-Track {
+              transition: transform 0.3s ease-out;
+  
+              div {
+                height: 40px;
+                text-align: right;
+                padding: 0 8px;
+              }
+            }
+          }
         }
+      }
     }
-    }
-}
+  
 
 .boxLikeAndPrice{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 21px;
     position: fixed;
     bottom: 0;
     right: 36px;
@@ -192,6 +217,17 @@ main{
     height: 89px;
     border-radius: 5px 5px 0 0;
     z-index: 100;
+
+    .totalLike{
+        display: flex;
+        gap: 6px;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    .priceForDay{
+        text-align: center;
+        font-size: 1.5rem;
+    }
 }
 
 .modal {

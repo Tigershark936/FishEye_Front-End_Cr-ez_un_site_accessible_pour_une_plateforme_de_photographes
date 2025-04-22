@@ -1,32 +1,41 @@
 // Creation de la section galery
 
-export function galeryPhotographer(main) {
-    mediaGalery(main); // on appelle la fonction dynamique ici
+async function getMedias(){
+    const request = await fetch("../data/photographers.json");
+    const data = await request.json();
+    
+    //Retourne le tableau des médias des photographers
+    return data.media;
+}
+
+async function getPhotographers(){
+    const request = await fetch("../data/photographers.json");
+    const data = await request.json();
+    
+    //Retourne le tableau photographers 
+    return data.photographers;
 }
 
 // fonction qui me sert à faire le lien entre l’ID du photographe pour récuperer les data du JSON
-function getFolderName(photographerId) {
-    switch (photographerId) {
-        case 243: return 'Mimi';
-        case 930: return 'Ellie Rose';
-        case 82:  return 'Tracy';
-        case 527: return 'Nabeel';
-        case 925: return 'Rhode';
-        case 195: return 'Marcel';
-        default: return '';
-    }
+async function getFolderName(photographerId) {
+    const photographers = await getPhotographers();
+ 
+     
+    const photographer = photographers.find((photographer) => photographer.id === photographerId);
+    const photographerName = photographer.name.split(' ')[0];
+    console.debug('photographerName', photographerName);
+    const nameWithoutTiret = photographerName.replace('-', ' ');
+    
+    console.debug('nameWithoutTiret', nameWithoutTiret);
+
+    return nameWithoutTiret;
 }
 
-// stocke les médias globaux pour le tri de la galerie
-let allMedias = [] 
-
 // Fonction qui récupère les médias du bon photographe et les affiche
-async function mediaGalery(main) {
+async function displayMedias(data) {
     try {
-        // On va chercher les données dans le fichier JSON
-        const response = await fetch('../../data/photographers.json');
-        const data = await response.json();
-
+        const main = document.getElementById('main');
+        
         const params = new URLSearchParams(window.location.search);
         const photographerId = parseInt(params.get('id'), 10);
 
@@ -34,9 +43,9 @@ async function mediaGalery(main) {
         sectionGalery.classList.add('galery');
 
         // AJOUT : filtrage des médias pour le bon photographe grâce a son id
-        const medias = data.media.filter((item) => item.photographerId === photographerId);
+        const medias = data.filter((item) => item.photographerId === photographerId);
 
-        medias.forEach((media) => {
+        medias.forEach(async(media) => {
             const { title, image, video, likes, date, price} = media;
 
             // Création du conteneur de galerie pour chaque média
@@ -50,9 +59,10 @@ async function mediaGalery(main) {
             galeryPhotograph.appendChild(elementGalery);
 
             // Image ou vidéo dans la galerie du photographe grâce à cette condition
+            const folderName = await getFolderName(photographerId);
             if (image) {
                 const img = document.createElement('img');
-                img.setAttribute("src", `assets/photographers/Sample-photos/${getFolderName(photographerId)}/${image}`);
+                img.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${image}`);
                 img.setAttribute("alt", title);
                 img.classList.add('element_galery', 'img');
                 elementGalery.appendChild(img);
@@ -60,33 +70,73 @@ async function mediaGalery(main) {
                 const vid = document.createElement('video');
                 vid.setAttribute("controls", true);
                 const source = document.createElement('source');
-                source.setAttribute("src", `assets/photographers/Sample-photos/${getFolderName(photographerId)}/${video}`);
+                source.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${video}`);
                 source.setAttribute('type', 'video/mp4');
                 vid.appendChild(source);
                 elementGalery.appendChild(vid);
             }
 
-            // Titre de l'élément photo ou vidéo
-            const txtElement = document.createElement('h3');
-            txtElement.textContent = `${title}`;
-            txtElement.classList.add('info-img', 'h3');
-            elementGalery.appendChild(txtElement);
+           // Titre de l'élément photo ou vidéo
+           const txtElement = document.createElement('h3');
+           txtElement.textContent = `${title}`;
+           txtElement.classList.add('info-img', 'h3');
+           elementGalery.appendChild(txtElement);
 
-            // Boite à like de l'élémentGalery
-            const boxLike = document.createElement('div');
-            boxLike.classList.add('boxlike')
-            txtElement.appendChild(boxLike)
+           // Compteur de likes à rouleau unique et le heart ===
+           const boxLike = document.createElement('div');
+           boxLike.classList.add('boxlike');
+           boxLike.setAttribute('tabindex', '0');
+           boxLike.setAttribute('role', 'button');
+           boxLike.setAttribute('aria-label', `Liker le média ${title}`);
+           txtElement.appendChild(boxLike);
 
-            // Affichage du nombre de likes 
-            const numberLikes = document.createElement('p')
-            numberLikes.textContent = `${likes}`;
-            boxLike.appendChild(numberLikes)
+           //Permet à l'utilisateur de liker le média si il like.
+           boxLike.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                boxLike.click();
+                }
+            });
 
-            // affichage du cœur (likes statique pour l’instant)
-            const heart = document.createElement('div');
-            heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-            boxLike.appendChild(heart);
-        });
+           // Nombre de like du média
+           const numberLikes = document.createElement('div');
+           numberLikes.classList.add('numberLikes-counter');
+           boxLike.appendChild(numberLikes);
+
+           const digitTrack = document.createElement('div');
+           digitTrack.classList.add('digital-Track');
+           numberLikes.appendChild(digitTrack);
+
+           let currentLikeValue = likes;
+
+           // Crée les lignes jusqu'à une valeur max
+           const maxValue = currentLikeValue + 1000; 
+           for (let i = 0; i <= maxValue; i++) {
+               const line = document.createElement('div');
+               line.textContent = i;
+               digitTrack.appendChild(line);
+           }
+
+           // Position initiale
+           digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
+
+           // Clic pour incrémenter les likes des datas avec les utilisateurs
+           boxLike.addEventListener('click', () => {
+               currentLikeValue += 1;
+
+               // Ajoute plus de lignes si on dépasse
+               if (currentLikeValue >= digitTrack.children.length) {
+                   const line = document.createElement('div');
+                   line.textContent = currentLikeValue;
+                   digitTrack.appendChild(line);
+               }
+
+               digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
+           });
+
+           const heart = document.createElement('div');
+           heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+           boxLike.appendChild(heart);
+       });
 
         // On ajoute la galerie au main
         main.appendChild(sectionGalery);
@@ -94,3 +144,11 @@ async function mediaGalery(main) {
         console.error('Erreur lors du chargement de la galerie dynamique :', error);
     }
 }
+
+async function init() {
+    // Récupère les médias des photographes
+    const medias = await getMedias();
+    displayMedias(medias);
+}
+
+init();

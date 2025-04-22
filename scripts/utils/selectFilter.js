@@ -1,7 +1,9 @@
 // Création de la section selected-filter
 
+export function dropdownOpenList() {
 
-export function dropdownOpenList(main) {
+    const main = document.getElementById('main');
+    
     // Création du conteneur principal (section)
     const sectionOrderBy = document.createElement("section");
     sectionOrderBy.classList.add("section");
@@ -15,6 +17,9 @@ export function dropdownOpenList(main) {
     const dropdown = document.createElement("div");
     dropdown.classList.add("dropdown");
     dropdown.tabIndex = 0;
+    dropdown.setAttribute('tabindex', '0');
+    dropdown.setAttribute('role', 'button');
+    dropdown.setAttribute('aria-label', `Trier par`);
     sectionOrderBy.appendChild(dropdown);
 
     // Élément affiché par défaut (sélection actuelle)

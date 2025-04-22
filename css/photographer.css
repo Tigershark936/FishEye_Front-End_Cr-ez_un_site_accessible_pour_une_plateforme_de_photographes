@@ -151,19 +151,40 @@ main {
 .galery .element_galery img:active, .galery .element_galery video:active {
   transform: scale(2);
 }
-.galery .element_galery .info-img {
+.galery .info-img {
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
   font-weight: 400;
   color: #901C1C;
 }
-.galery .element_galery .info-img .boxlike {
+.galery .info-img .boxlike {
   display: flex;
   gap: 6.65px;
+  align-items: center;
+}
+.galery .info-img .boxlike .numberLikes-counter {
+  overflow: hidden;
+  height: 40px;
+  font-size: 32px;
+  line-height: 40px;
+  font-family: monospace;
+  width: auto;
+  display: inline-block;
+}
+.galery .info-img .boxlike .numberLikes-counter .digital-Track {
+  transition: transform 0.3s ease-out;
+}
+.galery .info-img .boxlike .numberLikes-counter .digital-Track div {
+  height: 40px;
+  text-align: right;
+  padding: 0 8px;
 }
 
 .boxLikeAndPrice {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 21px;
   position: fixed;
   bottom: 0;
   right: 36px;
@@ -172,6 +193,16 @@ main {
   height: 89px;
   border-radius: 5px 5px 0 0;
   z-index: 100;
+}
+.boxLikeAndPrice .totalLike {
+  display: flex;
+  gap: 6px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.boxLikeAndPrice .priceForDay {
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .modal {
