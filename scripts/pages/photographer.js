@@ -9,6 +9,14 @@ async function getPhotographers(){
     return data.photographers;
 }
 
+async function getMedias(){
+    const request = await fetch("../data/photographers.json");
+    const data = await request.json();
+    
+    //Retourne le tableau des médias des photographers
+    return data.media;
+}
+
 // permet de retrouver un photographe spécifique à partir de son id, en consultant le fichier photographers.json.
 async function getPhotographerById(id) {
     const photographers = await getPhotographers();
@@ -69,14 +77,27 @@ async function constructPhotographerPage(photograph){
     photographPictureImage.src = `assets/photographers/Sample-photos/Photographers-ID-Photos/${photograph.portrait}`;
     photographPicture.appendChild(photographPictureImage);
 
+    //Appele ici le selecteur de trie
+    dropdownOpenList(photograph);
+
     const totalLikesAndPrice = document.createElement('div');
     totalLikesAndPrice.classList.add('boxLikeAndPrice');
-    document.body.appendChild(totalLikesAndPrice)
+    document.body.appendChild(totalLikesAndPrice);
+
+    // Nouvelle récupération des médias du photographeId
+    const medias = await getMedias();
+    const photographerMedias = medias.filter(media => media.photographerId === photograph.id);
+
+    // Compteur du calcul total des likes des médias d'une galery photographer
+    let totalLikesCount = 0;
+    photographerMedias.forEach(media => {
+    totalLikesCount += media.likes;
+});
 
     const totalLikes = document.createElement('div');
-    totalLikes.classList.add('totalLike')
-    totalLikes.textContent = `297 081`;
-    totalLikesAndPrice.appendChild(totalLikes)
+    totalLikes.classList.add('totalLike');
+    totalLikes.textContent = `${totalLikesCount}`;
+    totalLikesAndPrice.appendChild(totalLikes);
 
     const heart = document.createElement('div');
     heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
@@ -86,12 +107,13 @@ async function constructPhotographerPage(photograph){
     priceForDay.classList.add('priceForDay')
     priceForDay.innerHTML = `300/jours`;
     totalLikesAndPrice.appendChild(priceForDay);
+}
 
-
-    //Appele ici le selecteur de trie
-    dropdownOpenList(photograph);
-    
-
+export function updateTotalLikes(newValue){
+    const totalLikesElement = document.querySelector('.totalLike');
+    if (totalLikesElement) {
+        totalLikesElement.innerHTML = `${newValue}`;
+    }
 }
 
 

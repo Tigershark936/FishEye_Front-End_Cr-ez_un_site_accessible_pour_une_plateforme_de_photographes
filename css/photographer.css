@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *, ::after, ::before {
   margin: 0;
   padding: 0;
@@ -148,9 +149,6 @@ main {
   border-radius: 5px;
   object-fit: cover;
 }
-.galery .element_galery img:active, .galery .element_galery video:active {
-  transform: scale(2);
-}
 .galery .info-img {
   display: flex;
   justify-content: space-between;
@@ -162,13 +160,13 @@ main {
   display: flex;
   gap: 6.65px;
   align-items: center;
+  cursor: pointer;
 }
 .galery .info-img .boxlike .numberLikes-counter {
   overflow: hidden;
   height: 40px;
-  font-size: 32px;
+  font-size: 1.5rem;
   line-height: 40px;
-  font-family: monospace;
   width: auto;
   display: inline-block;
 }
@@ -178,7 +176,6 @@ main {
 .galery .info-img .boxlike .numberLikes-counter .digital-Track div {
   height: 40px;
   text-align: right;
-  padding: 0 8px;
 }
 
 .boxLikeAndPrice {
@@ -203,6 +200,46 @@ main {
 .boxLikeAndPrice .priceForDay {
   text-align: center;
   font-size: 1.5rem;
+}
+
+.lightBox {
+  width: 90vw; /* 90% de la largeur de la fenêtre */
+  max-width: 1050px;
+  height: 90vh; /* 90% de la hauteur de la fenêtre */
+  max-height: 900px;
+  position: fixed;
+  top: 5%;
+  left: 25%;
+  display: none;
+  background-color: purple;
+}
+.lightBox .control-btn {
+  border: none;
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+.lightBox .control-btn i {
+  color: #901C1C;
+  font-size: 48px;
+}
+.lightBox .control-btn i .fa-solid {
+  color: transparent;
+}
+.lightBox .closeLightBox {
+  top: 10%;
+  transform: translateY(-50%);
+  left: 1080px;
+}
+.lightBox .previous-btn {
+  top: 50%;
+  transform: translateY(-50%);
+  left: -230px;
+}
+.lightBox .next-btn {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 890px;
 }
 
 .modal {

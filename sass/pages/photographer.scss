@@ -161,10 +161,6 @@ main{
         height: 300px;
         border-radius: 5px;
         object-fit: cover;
-  
-        &:active {
-          transform: scale(2);
-        }
       }
     }
   
@@ -179,14 +175,14 @@ main{
           display: flex;
           gap: 6.65px;
           align-items: center;
+          cursor: pointer;
   
           //Compteur à rouleau unique
           .numberLikes-counter {
             overflow: hidden;
             height: 40px;
-            font-size: 32px;
+            font-size: 1.5rem;
             line-height: 40px;
-            font-family: monospace;
             width: auto;
             display: inline-block;
   
@@ -196,7 +192,6 @@ main{
               div {
                 height: 40px;
                 text-align: right;
-                padding: 0 8px;
               }
             }
           }
@@ -228,6 +223,49 @@ main{
         text-align: center;
         font-size: 1.5rem;
     }
+}
+
+.lightBox{
+  width: 90vw; /* 90% de la largeur de la fenêtre */
+  max-width: 1050px;
+  height: 90vh; /* 90% de la hauteur de la fenêtre */
+  max-height: 900px;
+  position: fixed;
+  top: 5%;
+  left: 25%;
+  display: none;
+  background-color: purple;
+
+  .control-btn{
+    border: none;
+    position: relative;
+    width: 96px;
+    height: 96px;
+
+    i{
+      color: #901C1C;
+      font-size: 48px;
+
+      .fa-solid{
+        color: transparent;
+      }
+    }
+  }
+  .closeLightBox{
+    top: 10%;
+    transform: translateY(-50%);
+    left: 1080px;
+  }
+  .previous-btn{
+    top: 50%;
+    transform: translateY(-50%);
+    left: -230px;
+  }
+  .next-btn{
+    top: 50%;
+    transform: translateY(-50%);
+    left: 890px;
+  }
 }
 
 .modal {

@@ -1,4 +1,6 @@
 // Creation de la section galery
+import { updateTotalLikes } from '../pages/photographer.js';
+import { displayLightBox, handleCloseLightBox } from '../utils/lightBox.js';
 
 async function getMedias(){
     const request = await fetch("../data/photographers.json");
@@ -23,10 +25,8 @@ async function getFolderName(photographerId) {
      
     const photographer = photographers.find((photographer) => photographer.id === photographerId);
     const photographerName = photographer.name.split(' ')[0];
-    console.debug('photographerName', photographerName);
+    console.log('photographerName', photographerName);
     const nameWithoutTiret = photographerName.replace('-', ' ');
-    
-    console.debug('nameWithoutTiret', nameWithoutTiret);
 
     return nameWithoutTiret;
 }
@@ -58,14 +58,25 @@ async function displayMedias(data) {
             elementGalery.classList.add('element_galery');
             galeryPhotograph.appendChild(elementGalery);
 
+
             // Image ou vidéo dans la galerie du photographe grâce à cette condition
             const folderName = await getFolderName(photographerId);
+
+            // Lien entre le bouton "X" et la fonction
+            const closeLightBoxBtn = document.querySelector(".closeLightBox");
+            closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
+            closeLightBoxBtn.setAttribute('role', 'button');
+
             if (image) {
                 const img = document.createElement('img');
                 img.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${image}`);
                 img.setAttribute("alt", title);
                 img.classList.add('element_galery', 'img');
                 elementGalery.appendChild(img);
+
+                // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
+                img.addEventListener('click', () => displayLightBox(img.src, title));
+
             } else if (video) {
                 const vid = document.createElement('video');
                 vid.setAttribute("controls", true);
@@ -74,6 +85,9 @@ async function displayMedias(data) {
                 source.setAttribute('type', 'video/mp4');
                 vid.appendChild(source);
                 elementGalery.appendChild(vid);
+
+                // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
+                vid.addEventListener('click', () => displayLightBox(source.src, title));
             }
 
            // Titre de l'élément photo ou vidéo
@@ -130,8 +144,13 @@ async function displayMedias(data) {
                    digitTrack.appendChild(line);
                }
 
-               digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
-           });
+            digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
+
+            // Permet de mettre à jour le total global par rapport a un like sur la galery
+            totalLikesCount++;
+            updateTotalLikes(totalLikesCount);
+            console.log(totalLikesCount);  
+        });
 
            const heart = document.createElement('div');
            heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
