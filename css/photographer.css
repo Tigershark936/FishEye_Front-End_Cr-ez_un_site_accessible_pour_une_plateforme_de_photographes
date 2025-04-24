@@ -149,11 +149,17 @@ main {
   object-fit: cover;
 }
 .galery .info-img {
+  max-width: calc(100% - 10px);
   display: flex;
   justify-content: space-between;
+  color: #901C1C;
+}
+.galery .info-img h3 {
   font-size: 1.5rem;
   font-weight: 400;
-  color: #901C1C;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .galery .info-img .boxlike {
   display: flex;

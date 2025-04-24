@@ -91,10 +91,15 @@ async function displayMedias(data) {
             }
 
            // Titre de l'élément photo ou vidéo
-           const txtElement = document.createElement('h3');
-           txtElement.textContent = `${title}`;
-           txtElement.classList.add('info-img', 'h3');
+           const txtElement = document.createElement('div');
+           txtElement.classList.add('info-img');
            elementGalery.appendChild(txtElement);
+
+           // Titre de l'élément photo ou vidéo
+           const titleMedia = document.createElement('h3');
+           titleMedia.textContent = `${title}`;
+           titleMedia.classList.add("h3")
+           txtElement.appendChild(titleMedia)
 
            // Compteur de likes à rouleau unique et le heart ===
            const boxLike = document.createElement('div');
