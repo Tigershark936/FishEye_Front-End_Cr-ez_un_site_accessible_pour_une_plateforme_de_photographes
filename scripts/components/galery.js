@@ -75,7 +75,7 @@ async function displayMedias(data) {
                 elementGalery.appendChild(img);
 
                 // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
-                img.addEventListener('click', () => displayLightBox(img.src, title));
+                img.addEventListener('click', () => displayLightBox(img.src, title, 'image'));
 
             } else if (video) {
                 const vid = document.createElement('video');
@@ -87,7 +87,7 @@ async function displayMedias(data) {
                 elementGalery.appendChild(vid);
 
                 // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
-                vid.addEventListener('click', () => displayLightBox(source.src, title));
+                vid.addEventListener('click', () => displayLightBox(source.src, title, 'video'));
             }
 
            // Titre de l'élément photo ou vidéo
