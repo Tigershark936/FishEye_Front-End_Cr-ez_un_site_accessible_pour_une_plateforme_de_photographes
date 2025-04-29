@@ -1,14 +1,5 @@
-async function getPhotographers(){
-    const request = await fetch("../data/photographers.json");
-    const data = await request.json()
-    
-    //Retourne le tableau photographers seulement une fois récupéré
-    return ({
-        photographers:data.photographers, 
-        media: data.media
-        })
-}
-
+import { getPhotographers } from "../api/data_services.js";
+import { photographerTemplate } from "../templates/home_template.js";
 
 async function displayData(photographers) {
     const photographersSection = document.querySelector(".photographer_section");
@@ -23,8 +14,8 @@ async function displayData(photographers) {
 
 async function init() {
     // Récupère les datas des photographes
-const { photographers } = await getPhotographers();
-displayData(photographers);
+    const photographers = await getPhotographers();
+    displayData(photographers);
 }
 
 init();

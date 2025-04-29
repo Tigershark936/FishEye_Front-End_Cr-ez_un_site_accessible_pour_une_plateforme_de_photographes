@@ -1,5 +1,4 @@
 // Création de la section selected-filter
-
 export function dropdownOpenList() {
 
     const main = document.getElementById('main');
