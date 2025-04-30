@@ -153,7 +153,7 @@ main{
     .element_galery {
       width: 350px;
       height: 351px;
-      background-color: gold;
+      // background-color: gold;
       overflow: hidden;
   
       img, video {
@@ -165,13 +165,13 @@ main{
     }
   
       .info-img {
-        max-width: calc(100% - 10px);
-        display: flex;
+        max-width: calc(100% - 1px);
         justify-content: space-between;
+        display: flex;
         color: #901C1C;
+        font-size: 1.5rem;
 
         h3{
-          font-size: 1.5rem;
           font-weight: 400;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -197,6 +197,7 @@ main{
               transition: transform 0.3s ease-out;
   
               div {
+                font-size: 1.5rem;
                 height: 40px;
                 text-align: right;
               }
@@ -253,9 +254,9 @@ main{
 
     .lightbox-content{
       position: absolute;
-      top: 50%;
+      top: 22px;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%);
       width: 1050px;
       height: 900px;
       background-color: green;
@@ -271,6 +272,12 @@ main{
         display: block;
         margin: auto;
       }
+    }
+
+    .titleMedia{
+      font-weight: 400;
+      font-size: 1.5rem;
+      color:#901c1c;
     }
 
     .control-btn{

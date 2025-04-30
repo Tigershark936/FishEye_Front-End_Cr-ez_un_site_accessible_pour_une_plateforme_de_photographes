@@ -2,37 +2,43 @@ import { displayLightBox, handleCloseLightBox } from "../utils/lightBox.js";
 import { getFolderName } from "../utils/getFolderName.js";
 
 export function constructPhotographerPage(photograph, medias) {
+
   function getcardHeaderProtograph() {
     const photographHeader = document.createElement("div");
     photographHeader.classList.add("photograph");
+    photographHeader.setAttribute("aria-label", "En-tête du profil du photographe");
 
     // Création de la description du photographe
     const photographDescription = document.createElement("div");
     photographDescription.classList.add("photograph__description");
+    photographDescription.setAttribute("aria-label", `Description de ${photograph.name}`);
     photographHeader.appendChild(photographDescription);
 
     // Création du firstname et surname("name") du photographe
     const photographName = document.createElement("h1");
     photographName.classList.add("photograph__description__name");
     photographName.textContent = `${photograph.name}`;
+    photographName.setAttribute("aria-label", `Nom du photographe : ${photograph.name}`);
     photographDescription.appendChild(photographName);
 
     // Création de la localisation du photographe
     const photographLocation = document.createElement("h2");
     photographLocation.classList.add("photograph__description__location");
     photographLocation.textContent = `${photograph.city}, ${photograph.country}`;
+    photographLocation.setAttribute("aria-label", `Localisation du photographe : ${photograph.city}, ${photograph.country}`);
     photographDescription.appendChild(photographLocation);
 
     // Création de la citation du photographe
     const photographCitation = document.createElement("p");
     photographCitation.classList.add("photograph__description__citation");
     photographCitation.textContent = `${photograph.tagline}`;
+    photographCitation.setAttribute("aria-label", `Citation du photographe : ${photograph.tagline}`);
     photographDescription.appendChild(photographCitation);
 
     // Création du bonton pour contacter le photographe
     const photographContactButton = document.createElement("button");
     photographContactButton.textContent = "Contactez-moi";
-    photographContactButton.setAttribute("aria-label", `Contact Me`);
+    photographContactButton.setAttribute("aria-label", `Bouton pour contacter le photographe`);
     photographHeader.appendChild(photographContactButton);
 
     // Ajout de l'écouteur d'événement pour ouvrir la modale afin de contacter
@@ -41,15 +47,13 @@ export function constructPhotographerPage(photograph, medias) {
     // Création de l'emplacement pour la photo du photographe
     const photographPicture = document.createElement("div");
     photographPicture.classList.add("photograph__picture");
-    photographDescription.setAttribute(
-      "alt",
-      `Portrait du photographe ${name}`
-    );
+    photographPicture.setAttribute("aria-label", `Portrait du photographe ${photograph.name}`);
     photographHeader.appendChild(photographPicture);
 
     // Création de l'ajout de la photo du photographe dans la div 'photograph__picture'
     const photographPictureImage = document.createElement("img");
     photographPictureImage.src = `assets/photographers/Sample-photos/Photographers-ID-Photos/${photograph.portrait}`;
+    photographPicture.setAttribute("alt",`Portrait du photographe ${photograph.name}`);
     photographPicture.appendChild(photographPictureImage);
 
     //Appele ici le selecteur de trie
@@ -57,6 +61,7 @@ export function constructPhotographerPage(photograph, medias) {
 
     const totalLikesAndPrice = document.createElement("div");
     totalLikesAndPrice.classList.add("boxLikeAndPrice");
+    totalLikesAndPrice.setAttribute("aria-label", "Encadré contenant du total de likes et le tarif journalier par jour");
     document.body.appendChild(totalLikesAndPrice);
 
     // Nouvelle récupération des médias du photographeId
@@ -75,15 +80,17 @@ export function constructPhotographerPage(photograph, medias) {
     const totalLikes = document.createElement("div");
     totalLikes.classList.add("totalLike");
     totalLikes.textContent = `${totalLikesCount}`;
+    totalLikes.setAttribute("aria-label", `Nombre total de likes sur toute la galerie du photgraphe : ${totalLikesCount}`);
     totalLikesAndPrice.appendChild(totalLikes);
 
     const heart = document.createElement("div");
-    heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
     totalLikes.appendChild(heart);
 
     const priceForDay = document.createElement("div");
     priceForDay.classList.add("priceForDay");
     priceForDay.innerHTML = `300/jours`;
+    priceForDay.setAttribute("aria-label", `Tarif journalier du photographe : ${photograph.price}`);
     totalLikesAndPrice.appendChild(priceForDay);
 
     return photographHeader;
@@ -97,6 +104,7 @@ export function constructPhotographerPage(photograph, medias) {
 
       const sectionGalery = document.createElement("section");
       sectionGalery.classList.add("galery");
+      sectionGalery.setAttribute("aria-label", `Galerie des médias du photographe ${photograph.name}`);
 
       // AJOUT : filtrage des médias pour le bon photographe grâce a son id
       const mediasData = medias.filter(
@@ -109,11 +117,13 @@ export function constructPhotographerPage(photograph, medias) {
         // Création du conteneur de galerie pour chaque média
         const galeryPhotograph = document.createElement("div");
         galeryPhotograph.classList.add("galery");
+        galeryPhotograph.setAttribute("aria-label", `Média : ${title}`);
         sectionGalery.appendChild(galeryPhotograph);
 
         // Création d'un élément individuel de la galerie
         const elementGalery = document.createElement("div");
         elementGalery.classList.add("element_galery");
+        elementGalery.setAttribute("aria-label", `Conteneur du média ${title}`);
         galeryPhotograph.appendChild(elementGalery);
 
         // Image ou vidéo dans la galerie du photographe grâce à cette condition
@@ -123,29 +133,27 @@ export function constructPhotographerPage(photograph, medias) {
         const closeLightBoxBtn = document.querySelector(".closeLightBox");
         closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
         closeLightBoxBtn.setAttribute("role", "button");
+        closeLightBoxBtn.setAttribute("aria-label", "Fermer la visionneuse de médias");
 
         if (image) {
           const img = document.createElement("img");
-          img.setAttribute(
-            "src",
-            `assets/photographers/Sample-photos/${folderName}/${image}`
-          );
+          img.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${image}`);
           img.setAttribute("alt", title);
           img.classList.add("element_galery", "img");
+          img.setAttribute("aria-label", `Image : ${title}`);
           elementGalery.appendChild(img);
 
           // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
           img.addEventListener("click", () =>
             displayLightBox(img.src, title, "image")
           );
+
         } else if (video) {
           const vid = document.createElement("video");
           vid.setAttribute("controls", true);
+          vid.setAttribute("aria-label", `Vidéo : ${title}`);
           const source = document.createElement("source");
-          source.setAttribute(
-            "src",
-            `assets/photographers/Sample-photos/${folderName}/${video}`
-          );
+          source.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${video}`);
           source.setAttribute("type", "video/mp4");
           vid.appendChild(source);
           elementGalery.appendChild(vid);
@@ -159,12 +167,14 @@ export function constructPhotographerPage(photograph, medias) {
         // Titre de l'élément photo ou vidéo
         const txtElement = document.createElement("div");
         txtElement.classList.add("info-img");
+        txtElement.setAttribute("aria-label", `Informations sur le média : ${title}`);
         elementGalery.appendChild(txtElement);
 
         // Titre de l'élément photo ou vidéo
         const titleMedia = document.createElement("h3");
         titleMedia.textContent = `${title}`;
         titleMedia.classList.add("h3");
+        titleMedia.setAttribute("aria-label", `Titre : ${title}`);
         txtElement.appendChild(titleMedia);
 
         // Compteur de likes à rouleau unique et le heart ===
@@ -172,7 +182,7 @@ export function constructPhotographerPage(photograph, medias) {
         boxLike.classList.add("boxlike");
         boxLike.setAttribute("tabindex", "0");
         boxLike.setAttribute("role", "button");
-        boxLike.setAttribute("aria-label", `Liker le média ${title}`);
+        boxLike.setAttribute("aria-label", `Liker ou disliker le média ${title}`);
         txtElement.appendChild(boxLike);
 
         //Permet à l'utilisateur de liker le média si il like.
@@ -185,6 +195,7 @@ export function constructPhotographerPage(photograph, medias) {
         // Nombre de like du média
         const numberLikes = document.createElement("div");
         numberLikes.classList.add("numberLikes-counter");
+        numberLikes.setAttribute("aria-label", `Compteur de likes ${likes}`);
         boxLike.appendChild(numberLikes);
 
         const digitTrack = document.createElement("div");
@@ -204,9 +215,18 @@ export function constructPhotographerPage(photograph, medias) {
         // Position initiale
         digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
 
+
+        // variable qui me permet de rajouter ou enlever 1 like par utilisateur / par media
+        let isLiked = false
         // Clic pour incrémenter les likes des datas avec les utilisateurs
         boxLike.addEventListener("click", () => {
-          currentLikeValue += 1;
+          if (!isLiked) {
+            currentLikeValue += 1;
+            isLiked = true;
+          } else {
+            currentLikeValue --;
+            isLiked = false;
+          }
 
           // Ajoute plus de lignes si on dépasse
           if (currentLikeValue >= digitTrack.children.length) {
@@ -226,7 +246,7 @@ export function constructPhotographerPage(photograph, medias) {
         });
 
         const heart = document.createElement("div");
-        heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+        heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`
         boxLike.appendChild(heart);
       });
 

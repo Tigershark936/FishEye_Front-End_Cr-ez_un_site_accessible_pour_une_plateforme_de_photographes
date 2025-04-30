@@ -139,7 +139,6 @@ main {
 .galery .element_galery {
   width: 350px;
   height: 351px;
-  background-color: gold;
   overflow: hidden;
 }
 .galery .element_galery img, .galery .element_galery video {
@@ -149,13 +148,13 @@ main {
   object-fit: cover;
 }
 .galery .info-img {
-  max-width: calc(100% - 10px);
-  display: flex;
+  max-width: calc(100% - 1px);
   justify-content: space-between;
+  display: flex;
   color: #901C1C;
+  font-size: 1.5rem;
 }
 .galery .info-img h3 {
-  font-size: 1.5rem;
   font-weight: 400;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -179,6 +178,7 @@ main {
   transition: transform 0.3s ease-out;
 }
 .galery .info-img .boxlike .numberLikes-counter .digital-Track div {
+  font-size: 1.5rem;
   height: 40px;
   text-align: right;
 }
@@ -228,9 +228,9 @@ main {
 }
 .lightBox .mediaLightBox .lightbox-content {
   position: absolute;
-  top: 50%;
+  top: 22px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   width: 1050px;
   height: 900px;
   background-color: green;
@@ -245,6 +245,11 @@ main {
   object-fit: cover;
   display: block;
   margin: auto;
+}
+.lightBox .mediaLightBox .titleMedia {
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #901c1c;
 }
 .lightBox .mediaLightBox .control-btn {
   background: transparent;
