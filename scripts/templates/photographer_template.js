@@ -89,7 +89,7 @@ export function constructPhotographerPage(photograph, medias) {
 
     const priceForDay = document.createElement("div");
     priceForDay.classList.add("priceForDay");
-    priceForDay.innerHTML = `300/jours`;
+    priceForDay.innerHTML = `${photograph.price}€ / jour`;
     priceForDay.setAttribute("aria-label", `Tarif journalier du photographe : ${photograph.price}`);
     totalLikesAndPrice.appendChild(priceForDay);
 
@@ -218,7 +218,7 @@ export function constructPhotographerPage(photograph, medias) {
 
         // variable qui me permet de rajouter ou enlever 1 like par utilisateur / par media
         let isLiked = false
-        // Clic pour incrémenter les likes des datas avec les utilisateurs
+        // Clic pour incrémenter ou décrémenter les likes des datas avec les utilisateurs
         boxLike.addEventListener("click", () => {
           if (!isLiked) {
             currentLikeValue += 1;
@@ -250,8 +250,8 @@ export function constructPhotographerPage(photograph, medias) {
         boxLike.appendChild(heart);
       });
 
-      // On ajoute la galerie au main
-      main.appendChild(sectionGalery);
+      return sectionGalery;
+
     } catch (error) {
       console.error(
         "Erreur lors du chargement de la galerie dynamique :",
@@ -259,6 +259,5 @@ export function constructPhotographerPage(photograph, medias) {
       );
     }
   }
-
   return { getcardHeaderProtograph, displayMediasTemplate };
 }

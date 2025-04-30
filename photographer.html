@@ -21,38 +21,50 @@
 
     <main id="main"></main>
 
-    <div class="lightBox">
+    <div class="lightBox" role="dialog" aria-modal="true" aria-label="Visionneuse de médias">
       <div class="mediaLightBox">
-        <div class="lightbox-content"></div>
-        <button class="control-btn closeLightBox"><i class="fa-solid fa-xmark"></i></button>
-        <button data-action="-1" class="control-btn previous-btn">
-          <i class="fa-solid fa-chevron-left"></i>
+        <div class="lightbox-content" aria-live="polite" aria-label="Contenu affiché dans la lightbox"></div>
+        
+        <button class="control-btn closeLightBox" aria-label="Fermer la lightbox">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
-        <button data-action="1" class="control-btn next-btn">
-          <i class="fa-solid fa-angle-right"></i>
+
+        <button data-action="-1" class="control-btn previous-btn" aria-label="Média précédent">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
         </button>
-        <h4 class="titleMedia"></h4>
+        <button data-action="1" class="control-btn next-btn" aria-label="Média suivant">
+          <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
+        </button>
+
+        <h4 class="titleMedia" aria-label="Titre du média en cours"></h4>
       </div>
     </div>
 
+
     <div id="contact_modal">
-      <div class="modal">
+      <div class="modal" tabindex="-1">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <h2 id="contact_modal_title">Contactez-moi</h2>
+          <button onclick="closeModal()" aria-label="Fermer la modale" class="modal-close-button">
+            <img src="assets/icons/close.svg" alt="Bouton pour fermer la modale"/>
+          </button>
         </header>
 
         <form>
           <div>
             <label for="firstname">Prénom</label>
-            <input type="text" name="firstname" id="firstname" />
+            <input type="text" name="firstname" id="firstname" aria-label="Prénom"/>
+        
             <label for="surname">Nom</label>
-            <input type="text" name="surname" id="surname" />
+            <input type="text" name="surname" id="surname" aria-label="Nom de famille"/>
+        
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" />
+            <input type="email" name="email" id="email" aria-label="Adresse email"/>
+        
             <label for="contact_message">Votre message</label>
-            <input type="text" name="contact_message" id="contact_message" />
+            <input type="text" name="contact_message" id="contact_message" aria-label="Message pour le photographe"/>
           </div>
+        
           <button type="submit" aria-label="Envoyer le message au photographe" class="contact_button">Envoyer</button>
         </form>
       </div>
@@ -61,7 +73,6 @@
     <script type="module" src="/scripts/pages/photographer_pages.js"></script>
     <script type="module" src="/scripts/utils/selectFilter.js"></script>
     <script type="module" src="/scripts/utils/lightBox.js"></script>
-    <script type="module" src="/scripts/components/galery.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>

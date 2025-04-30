@@ -32,6 +32,7 @@ export function dropdownOpenList() {
     // Liste déroulante
     const list = document.createElement("ul");
     list.classList.add("dropdown__list", "hidden");
+    list.setAttribute("role", "listbox");
     dropdown.appendChild(list);
 
     // Options disponibles
@@ -41,6 +42,24 @@ export function dropdownOpenList() {
         { value: 'title', text: 'Titre' }
     ];
 
+
+    function sortAndDisplayMedia(sortBy) {
+        const sortedMedia = [...Array.data];
+        switch (sortBy) {
+            case 'popularity':
+                sortedMedia.sort((a, b) => b.likes - a.likes);
+                break;
+            case 'date':
+                sortedMedia.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'title':
+                sortedMedia.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+        }
+        displayMedia(sortedMedia);
+    }
+
+    
     // Fonction pour rendre les options sélectionnées (en cachant l'actuelle)
     function renderList(selectedValue) {
         list.innerHTML = '';
@@ -49,6 +68,7 @@ export function dropdownOpenList() {
                 const li = document.createElement("li");
                 li.dataset.value = opt.value;
                 li.textContent = opt.text;
+                li.setAttribute("role", "option");
 
 
                 li.addEventListener("click", () => {
@@ -72,9 +92,9 @@ export function dropdownOpenList() {
         const currentText = selected.textContent.trim().split(" ")[0];
         let chevronClass;
             if (isOpen) {
-            chevronClass = 'fa-angle-up';
+                chevronClass = 'fa-angle-up';
             } else {
-            chevronClass = 'fa-angle-down';
+                chevronClass = 'fa-angle-down';
             }
         selected.innerHTML = `${currentText} <i class="chevron fa-solid ${chevronClass}"></i>`;
     });

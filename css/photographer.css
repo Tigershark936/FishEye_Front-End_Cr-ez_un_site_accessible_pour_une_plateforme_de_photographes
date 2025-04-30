@@ -192,19 +192,19 @@ main {
   right: 36px;
   background-color: #db8876;
   width: 376px;
-  height: 89px;
+  height: 69px;
   border-radius: 5px 5px 0 0;
   z-index: 100;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 .boxLikeAndPrice .totalLike {
   display: flex;
   gap: 6px;
   text-align: center;
-  font-size: 1.5rem;
 }
 .boxLikeAndPrice .priceForDay {
   text-align: center;
-  font-size: 1.5rem;
 }
 
 .lightBox {
@@ -290,6 +290,11 @@ main {
   margin: auto;
 }
 
+.modal-close-button img {
+  background-color: #DB8876;
+  border: none;
+}
+
 .modal header {
   justify-content: space-between;
   width: 100%;
@@ -323,7 +328,7 @@ form .contact_button {
   border-radius: 5px;
   cursor: pointer;
 }
-form .contact_button:hover {
+form .contact_button:active {
   background-color: #DB8876;
 }
 
