@@ -124,6 +124,7 @@ export function constructPhotographerPage(photograph, medias) {
         const elementGalery = document.createElement("div");
         elementGalery.classList.add("element_galery");
         elementGalery.setAttribute("aria-label", `Conteneur du média ${title}`);
+        elementGalery.setAttribute("tabindex", "0"); //rend l'élément focusable au clavier au Tab
         galeryPhotograph.appendChild(elementGalery);
 
         // Image ou vidéo dans la galerie du photographe grâce à cette condition
@@ -141,12 +142,20 @@ export function constructPhotographerPage(photograph, medias) {
           img.setAttribute("alt", title);
           img.classList.add("element_galery", "img");
           img.setAttribute("aria-label", `Image : ${title}`);
+          img.setAttribute("tabindex", "0")
           elementGalery.appendChild(img);
 
-          // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
+          // Ajout d'événement pour ouvrir la lightbox afin d'agrandir les médias
           img.addEventListener("click", () =>
             displayLightBox(img.src, title, "image")
           );
+
+          //Ajout de l'évènement pour ouvrir la lightbox mais avec la touche "Enter"
+          img.addEventListener("keyup", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              displayLightBox(img.src, title, "image");
+            }
+          });
 
         } else if (video) {
           const vid = document.createElement("video");
@@ -175,6 +184,7 @@ export function constructPhotographerPage(photograph, medias) {
         titleMedia.textContent = `${title}`;
         titleMedia.classList.add("h3");
         titleMedia.setAttribute("aria-label", `Titre : ${title}`);
+        titleMedia.setAttribute("tabindex", "0")
         txtElement.appendChild(titleMedia);
 
         // Compteur de likes à rouleau unique et le heart ===
@@ -240,9 +250,9 @@ export function constructPhotographerPage(photograph, medias) {
           }px)`;
 
           // Permet de mettre à jour le total global par rapport a un like sur la galery
-          totalLikesCount++;
-          updateTotalLikes(totalLikesCount);
-          console.log(totalLikesCount);
+          // totalLikesCount++;
+          // updateTotalLikes(totalLikesCount);
+          // console.log(totalLikesCount);
         });
 
         const heart = document.createElement("div");

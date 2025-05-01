@@ -1,15 +1,9 @@
-const controlButtons = document.querySelectorAll(".control-btn")
-const previousBtn = document.querySelector(".previous-btn")
-const nextBtn = document.querySelector(".next-btn")
-const closeLightBox = document.querySelector('.closeLightBox')
 const titleMediaLightBox = document.querySelector('.titleMedia')
-
-previousBtn.addEventListener("click", handleMediaIndex);
-nextBtn.addEventListener("click", handleMediaIndex);
 
 let MediaIndex = 0;
 let currentMediaList = [];
 
+// Gère le système du carrousel pour la lightBox
 function handleMediaIndex(e){
     const action = Number(e.currentTarget.getAttribute('data-action'));
     MediaIndex += action;
@@ -27,16 +21,19 @@ function handleMediaIndex(e){
     const currentMedia = currentMediaList[MediaIndex];
 
     // Affiche ce média dans la lightbox avec ses infos (src, titre, type)
-    displayLightBox(currentMedia.src, currentMedia.title, currentMedia.type);
+    displayLightBox(currentMedia.src, currentMedia.title, currentMedia.type, currentMediaList, MediaIndex);
 }
 
 export function displayLightBox(src, title, type, mediaList = [], index = 0) {
     const lightBox = document.querySelector(".lightBox");
+    lightBox.setAttribute("role", "dialog");
+    lightBox.setAttribute("aria-modal", "true");
+    lightBox.setAttribute("aria-hidden", "false");
     const contentLightBox = lightBox.querySelector(".lightbox-content");
 
     // On vide le contenu précédent
-    contentLightBox.innerHTML = '';
     lightBox.style.display = 'block';
+    contentLightBox.innerHTML = '';
 
     let mediaElement;
     if (type === 'image') {
@@ -46,6 +43,7 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
     } else if (type === 'video') {
         mediaElement = document.createElement('video');
         mediaElement.controls = true;
+        mediaElement.setAttribute("aria-label", title);
         const source = document.createElement('source');
         source.src = src;
         source.type = 'video/mp4';
@@ -61,10 +59,37 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
         MediaIndex = index;
     }
 
+    const previousBtn = document.querySelector(".previous-btn")
+    const nextBtn = document.querySelector(".next-btn")
+
+    previousBtn.addEventListener("click", handleMediaIndex);
+    nextBtn.addEventListener("click", handleMediaIndex);
+
+    document.addEventListener("keydown", handleKeydownLightBox);
+
     console.log('Clicked', src, title, type);
 }
 
 export function handleCloseLightBox() {
     const lightBox = document.querySelector(".lightBox");
+    lightBox.setAttribute('aria-hidden', 'true')
     lightBox.style.display = "none";
 }
+
+
+//Gère les interactions clavier dans la lightbox.
+function handleKeydownLightBox(e) {
+    //Flèche gauche (←) : affiche le média précédent
+    if (e.key === 'ArrowLeft') {
+        document.querySelector(".previous-btn").click();
+        //Flèche droite (→) : affiche le média suivant
+    } else if (e.key === 'ArrowRight') {
+        document.querySelector(".next-btn").click();
+    } else if (e.key === 'Escape') {
+        //Touche Échap (Escape) : ferme la lightbox.
+        handleCloseLightBox();
+        document.removeEventListener("keydown", handleKeydownLightBox);
+    }
+    document.addEventListener("keydown", handleKeydownLightBox);
+}
+
