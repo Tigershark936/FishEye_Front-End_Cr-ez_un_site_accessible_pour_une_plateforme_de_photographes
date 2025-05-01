@@ -2,21 +2,30 @@ function displayModal() {
     const modal = document.getElementById("contact_modal");
     const firstInput = modal.querySelector("input");
     modal.style.display = "block";
-    modal.setAttribute("aria-hidden", "false");
-    modal.setAttribute("role", "dialog");
     modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-hidden", "false");
     modal.setAttribute("aria-labelledby", "contact_modal_title");
 
     if (firstInput) {
         firstInput.focus();
     }
+
+    // Écoute de la touche Échap
+    document.addEventListener("keydown", handleEscape);
 }
 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
+    modal.setAttribute('aria-hidden', 'true')
     modal.style.display = "none";
 }
 
+function handleEscape(e) {
+  if (e.key === "Escape" || e.key === "Esc") {
+      closeModal();
+  }
+}
 
 // Gestion du submit du formulaire
 const form = document.querySelector('#contact_modal');

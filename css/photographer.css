@@ -289,8 +289,7 @@ main {
   padding: 35px;
   margin: auto;
 }
-
-.modal-close-button img {
+.modal button {
   background-color: #DB8876;
   border: none;
 }

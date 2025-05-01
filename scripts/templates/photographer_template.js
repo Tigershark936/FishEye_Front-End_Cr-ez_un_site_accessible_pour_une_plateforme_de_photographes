@@ -53,7 +53,7 @@ export function constructPhotographerPage(photograph, medias) {
     // Création de l'ajout de la photo du photographe dans la div 'photograph__picture'
     const photographPictureImage = document.createElement("img");
     photographPictureImage.src = `assets/photographers/Sample-photos/Photographers-ID-Photos/${photograph.portrait}`;
-    photographPicture.setAttribute("alt",`Portrait du photographe ${photograph.name}`);
+    photographPictureImage.alt = `Portrait du photographe ${photograph.name}`;
     photographPicture.appendChild(photographPictureImage);
 
     //Appele ici le selecteur de trie

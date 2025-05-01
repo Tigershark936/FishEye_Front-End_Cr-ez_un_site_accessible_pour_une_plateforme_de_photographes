@@ -322,11 +322,10 @@ main{
   padding: 35px;
   margin: auto;
 
-}
-
-.modal-close-button img{
-  background-color: #DB8876;
-  border: none;
+  button{
+    background-color: #DB8876;
+    border: none;
+  }
 }
 
 .modal header {
