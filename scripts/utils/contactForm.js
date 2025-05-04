@@ -7,6 +7,13 @@ function displayModal() {
     modal.setAttribute("aria-hidden", "false");
     modal.setAttribute("aria-labelledby", "contact_modal_title");
 
+    // Rendre le fond inaccessible pour le Tab quand le form est en block
+    main.setAttribute("inert", "");
+    const header = document.querySelector("header");
+      if (header) {
+        header.setAttribute("inert", "");
+      }
+
     if (firstInput) {
         firstInput.focus();
     }

@@ -1,4 +1,5 @@
 const titleMediaLightBox = document.querySelector('.titleMedia')
+const element_galery = document.querySelectorAll('elementGalery')
 
 let MediaIndex = 0;
 let currentMediaList = [];
@@ -19,6 +20,8 @@ function handleMediaIndex(e){
 
     // Récupère le média correspondant au nouvel index
     const currentMedia = currentMediaList[MediaIndex];
+    console.log(currentMediaList);
+    
 
     // Affiche ce média dans la lightbox avec ses infos (src, titre, type)
     displayLightBox(currentMedia.src, currentMedia.title, currentMedia.type, currentMediaList, MediaIndex);
@@ -30,10 +33,13 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
     lightBox.setAttribute("aria-modal", "true");
     lightBox.setAttribute("aria-hidden", "false");
     const contentLightBox = lightBox.querySelector(".lightbox-content");
-
+    
     // On vide le contenu précédent
     lightBox.style.display = 'block';
     contentLightBox.innerHTML = '';
+
+    // const main = document.querySelector("main");
+    // if (main) main.setAttribute("inert", "");
 
     let mediaElement;
     if (type === 'image') {
