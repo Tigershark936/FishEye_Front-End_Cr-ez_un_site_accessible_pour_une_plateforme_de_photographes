@@ -3,17 +3,9 @@ import { getMedias, getPhotographerById } from '../api/data_services.js';
 import { constructPhotographerPage } from '../templates/photographer_template.js';
 import { dropdownOpenList } from '../utils/selectFilter.js';
 
-export function updateTotalLikes(newValue){
-    const totalLikesElement = document.querySelector('.totalLike');
-    if (totalLikesElement) {
-        totalLikesElement.innerHTML = `${newValue}`;
-    }
-}
-
 
 async function displayPhotographerData(photographer, medias) {
     
-
     const main = document.getElementById('main');
     
     try {

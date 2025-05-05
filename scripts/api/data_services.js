@@ -1,7 +1,7 @@
 export async function getPhotographers(){
     const request = await fetch("../data/photographers.json");
     const data = await request.json()
-    console.log("🟢 Données JSON chargées :", data);
+    // console.log("🟢 Données JSON chargées :", data);
     
     //Retourne le tableau photographers 
     return data.photographers;
@@ -10,7 +10,7 @@ export async function getPhotographers(){
 export async function getMedias(){
     const request = await fetch("../data/photographers.json");
     const data = await request.json();
-    console.log("🟢 Données JSON chargées :", data);
+    // console.log("🟢 Données JSON chargées :", data);
     
     //Retourne le tableau des médias des photographers
     return data.media;

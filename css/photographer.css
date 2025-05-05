@@ -200,8 +200,19 @@ main {
 }
 .boxLikeAndPrice .totalLike {
   display: flex;
+  height: 30px;
   gap: 6px;
-  text-align: center;
+  align-items: center;
+  overflow: hidden;
+}
+.boxLikeAndPrice .totalLike .digital-Track {
+  transition: transform 0.3s ease-out;
+}
+.boxLikeAndPrice .totalLike .digital-Track div {
+  font-size: 1.5rem;
+  height: 40px;
+  text-align: right;
+  line-height: 40px;
 }
 .boxLikeAndPrice .priceForDay {
   text-align: center;

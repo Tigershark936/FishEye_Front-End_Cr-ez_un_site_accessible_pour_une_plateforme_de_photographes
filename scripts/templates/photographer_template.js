@@ -1,5 +1,6 @@
 import { displayLightBox, handleCloseLightBox } from "../utils/lightBox.js";
 import { getFolderName } from "../utils/getFolderName.js";
+import { getTotalLikesForPhotographer } from "../utils/getTotalLikesForPhotographer.js";
 
 export function constructPhotographerPage(photograph, medias) {
 
@@ -56,37 +57,56 @@ export function constructPhotographerPage(photograph, medias) {
     photographPictureImage.alt = `Portrait du photographe ${photograph.name}`;
     photographPicture.appendChild(photographPictureImage);
 
-    //Appele ici le selecteur de trie
-    // dropdownOpenList(photograph);
-
     const totalLikesAndPrice = document.createElement("div");
     totalLikesAndPrice.classList.add("boxLikeAndPrice");
     totalLikesAndPrice.setAttribute("aria-label", "Encadré contenant du total de likes et le tarif journalier par jour");
     document.body.appendChild(totalLikesAndPrice);
 
     // Nouvelle récupération des médias du photographeId
-    // const medias = await getMedias();
-    const photographerMedias = medias.filter(
-      (media) => media.photographerId === photograph.id
-    );
+    const params = new URLSearchParams(window.location.search);
+    const photographerId = parseInt(params.get("id"), 10);
 
-    // Compteur du calcul total des likes des médias d'une galery photographer
-    let totalLikesCount = 0;
+    // Calcul du total des likes via fonction utilitaire
+    const totalLikesCount = getTotalLikesForPhotographer(medias, photographerId);
 
-    photographerMedias.forEach((media) => {
-      totalLikesCount += media.likes;
-    });
+    console.log("Photographer ID depuis l'URL :", photographerId);
+    console.log("Médias pour ce photographe :", medias.filter(m => m.photographerId === photographerId));
+    console.log("Total des likes calculés :", totalLikesCount);
 
+    // Création du compteur total des likes du photographe
     const totalLikes = document.createElement("div");
     totalLikes.classList.add("totalLike");
-    totalLikes.textContent = `${totalLikesCount}`;
     totalLikes.setAttribute("aria-label", `Nombre total de likes sur toute la galerie du photgraphe : ${totalLikesCount}`);
-    totalLikesAndPrice.appendChild(totalLikes);
 
+    // === Ajout du compteur à rouleau pour totalLikes ===
+    const digitTrackTotal = document.createElement("div");
+    digitTrackTotal.classList.add("digital-Track");
+    totalLikes.appendChild(digitTrackTotal);
+
+    // Crée les lignes jusqu'à une valeur max pour totalLikes
+    const maxTotal = totalLikesCount + 1000;
+    for (let i = 0; i <= maxTotal; i++) {
+      const line = document.createElement("div");
+      line.textContent = i;
+      digitTrackTotal.appendChild(line);
+    }
+
+    // Position initiale du compteur
+    digitTrackTotal.style.transform = `translateY(-${totalLikesCount * 40}px)`;
+
+    // Stockage global pour mise à jour depuis displayMediasTemplate
+    window.totalLikesTrack = digitTrackTotal;
+    window.totalLikesValue = totalLikesCount;
+
+    // Ajout de l'icône cœur au compteur total
     const heart = document.createElement("div");
     heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
     totalLikes.appendChild(heart);
 
+    // Ajout du compteur total dans le conteneur
+    totalLikesAndPrice.appendChild(totalLikes);
+
+    // Création de la tarification journalière
     const priceForDay = document.createElement("div");
     priceForDay.classList.add("priceForDay");
     priceForDay.innerHTML = `${photograph.price}€ / jour`;
@@ -124,10 +144,9 @@ export function constructPhotographerPage(photograph, medias) {
         const elementGalery = document.createElement("div");
         elementGalery.classList.add("element_galery");
         elementGalery.setAttribute("aria-label", `Conteneur du média ${title}`);
-        elementGalery.setAttribute("tabindex", "0"); //rend l'élément focusable au clavier au Tab
+        elementGalery.setAttribute("tabindex", "0");
         galeryPhotograph.appendChild(elementGalery);
 
-        // Image ou vidéo dans la galerie du photographe grâce à cette condition
         const folderName = await getFolderName(photographerId);
 
         // Lien entre le bouton "X" et la fonction
@@ -142,7 +161,7 @@ export function constructPhotographerPage(photograph, medias) {
           img.setAttribute("alt", title);
           img.classList.add("element_galery", "img");
           img.setAttribute("aria-label", `Image : ${title}`);
-          img.setAttribute("tabindex", "0")
+          img.setAttribute("tabindex", "0");
           elementGalery.appendChild(img);
 
           // Ajout d'événement pour ouvrir la lightbox afin d'agrandir les médias
@@ -184,7 +203,7 @@ export function constructPhotographerPage(photograph, medias) {
         titleMedia.textContent = `${title}`;
         titleMedia.classList.add("h3");
         titleMedia.setAttribute("aria-label", `Titre : ${title}`);
-        titleMedia.setAttribute("tabindex", "0")
+        titleMedia.setAttribute("tabindex", "0");
         txtElement.appendChild(titleMedia);
 
         // Compteur de likes à rouleau unique et le heart ===
@@ -213,7 +232,6 @@ export function constructPhotographerPage(photograph, medias) {
         numberLikes.appendChild(digitTrack);
 
         let currentLikeValue = likes;
-
         // Crée les lignes jusqu'à une valeur max
         const maxValue = currentLikeValue + 1000;
         for (let i = 0; i <= maxValue; i++) {
@@ -225,38 +243,48 @@ export function constructPhotographerPage(photograph, medias) {
         // Position initiale
         digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
 
-
         // variable qui me permet de rajouter ou enlever 1 like par utilisateur / par media
-        let isLiked = false
+        let isLiked = false;
         // Clic pour incrémenter ou décrémenter les likes des datas avec les utilisateurs
         boxLike.addEventListener("click", () => {
           if (!isLiked) {
             currentLikeValue += 1;
             isLiked = true;
+            // Ajout +1 au compteur total pour totalLikes de la galery du photograph
+            window.totalLikesValue += 1;
           } else {
             currentLikeValue --;
             isLiked = false;
+            // Retrait -1 au compteur total pour totalLikes de la galery du photograph
+            window.totalLikesValue -= 1;
           }
 
-          // Ajoute plus de lignes si on dépasse
+          // Ajoute plus de lignes si on dépasse pour le compteur individuel
           if (currentLikeValue >= digitTrack.children.length) {
             const line = document.createElement("div");
             line.textContent = currentLikeValue;
             digitTrack.appendChild(line);
           }
 
+          // Applique l'animation de rouleau sur le compteur individuel
           digitTrack.style.transform = `translateY(-${
             currentLikeValue * 40
           }px)`;
 
-          // Permet de mettre à jour le total global par rapport a un like sur la galery
-          // totalLikesCount++;
-          // updateTotalLikes(totalLikesCount);
-          // console.log(totalLikesCount);
-        });
+          // Ajoute plus de lignes si on dépasse pour le compteur total
+          if (window.totalLikesValue >= window.totalLikesTrack.children.length) {
+            const line = document.createElement("div");
+            line.textContent = window.totalLikesValue;
+            window.totalLikesTrack.appendChild(line);
+          }
 
+          // Applique l'animation de rouleau sur le compteur total
+          window.totalLikesTrack.style.transform = `translateY(-${
+            window.totalLikesValue * 40}px)`;
+        });
+        
         const heart = document.createElement("div");
-        heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`
+        heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
         boxLike.appendChild(heart);
       });
 
@@ -269,5 +297,6 @@ export function constructPhotographerPage(photograph, medias) {
       );
     }
   }
+
   return { getcardHeaderProtograph, displayMediasTemplate };
 }
