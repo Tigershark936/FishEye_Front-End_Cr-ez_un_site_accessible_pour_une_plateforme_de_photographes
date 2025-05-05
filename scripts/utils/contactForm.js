@@ -1,36 +1,35 @@
 function displayModal() {
-    const modal = document.getElementById("contact_modal");
-    const firstInput = modal.querySelector("input");
-    modal.style.display = "block";
-    modal.setAttribute("aria-modal", "true");
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-hidden", "false");
-    modal.setAttribute("aria-labelledby", "contact_modal_title");
+  const modal = document.getElementById("contact_modal");
+  const firstInput = modal.querySelector("input");
+  modal.style.display = "block";
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-hidden", "false");
+  modal.setAttribute("aria-labelledby", "contact_modal_title");
 
-    // Rendre le fond inaccessible pour le Tab quand le form est en block
-    // main.setAttribute("inert", "");
-    // const header = document.querySelector("header");
-    //   if (header) {
-    //     header.setAttribute("inert", "");
-    //   }
+  // Rendre le fond inaccessible pour le Tab quand le form est en block
+  main.setAttribute("inert", "");
 
-    if (firstInput) {
-        firstInput.focus();
-    }
+  if (firstInput) {
+    firstInput.focus();
+  }
 
-    // Écoute de la touche Échap
-    document.addEventListener("keydown", handleEscape);
-}
+  // Écoute de la touche Échap pour fermer le formulary de contact
+  document.addEventListener("keydown", handleEscape);
+}     
 
 function closeModal() {
-    const modal = document.getElementById("contact_modal");
-    modal.setAttribute('aria-hidden', 'true')
-    modal.style.display = "none";
+  const modal = document.getElementById("contact_modal");
+  modal.setAttribute('aria-hidden', 'true')
+  modal.style.display = "none";
+
+  // Rendre le fond à nouveau accessible
+  main.removeAttribute("inert");
 }
 
 function handleEscape(e) {
-  if (e.key === "Escape" || e.key === "Esc") {
-      closeModal();
+  if (e.key === "Escape" || e.key === "Esc") {  
+  closeModal();
   }
 }
 
@@ -40,18 +39,18 @@ if (form) {
   form.addEventListener('submit', function(e) {
     e.preventDefault()
 
-    const firstname = document.getElementById("firstname").value;
-    const surname = document.getElementById("surname").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("contact_message").value;
+  const firstname = document.getElementById("firstname").value;
+  const surname = document.getElementById("surname").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("contact_message").value;
 
-    console.log("Formulaire soumis :", {
-        firstname,
-        surname,
-        email,
-        message
-    });
+  console.log("Formulaire soumis :", {
+    firstname,
+    surname,
+    email,
+    message
+  });
 
-    closeModal();
+  closeModal();
   });
 }

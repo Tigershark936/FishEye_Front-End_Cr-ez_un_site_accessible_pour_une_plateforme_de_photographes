@@ -38,8 +38,8 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
     lightBox.style.display = 'block';
     contentLightBox.innerHTML = '';
 
-    // const main = document.querySelector("main");
-    // if (main) main.setAttribute("inert", "");
+    // Rendre le fond inaccessible pour le Tab quand la lightBox est en block
+    main.setAttribute("inert", "");
 
     let mediaElement;
     if (type === 'image') {
@@ -80,6 +80,9 @@ export function handleCloseLightBox() {
     const lightBox = document.querySelector(".lightBox");
     lightBox.setAttribute('aria-hidden', 'true')
     lightBox.style.display = "none";
+
+    // Rendre le fond à nouveau accessible
+    main.removeAttribute("inert");
 }
 
 

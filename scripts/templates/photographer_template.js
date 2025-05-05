@@ -57,6 +57,7 @@ export function constructPhotographerPage(photograph, medias) {
     photographPictureImage.alt = `Portrait du photographe ${photograph.name}`;
     photographPicture.appendChild(photographPictureImage);
 
+    //Création de la boite Like Total et du Prix par jour
     const totalLikesAndPrice = document.createElement("div");
     totalLikesAndPrice.classList.add("boxLikeAndPrice");
     totalLikesAndPrice.setAttribute("aria-label", "Encadré contenant du total de likes et le tarif journalier par jour");
@@ -119,45 +120,56 @@ export function constructPhotographerPage(photograph, medias) {
   // Fonction qui récupère les médias du bon photographe et les affiche
   function displayMediasTemplate() {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const photographerId = parseInt(params.get("id"), 10);
+    const params = new URLSearchParams(window.location.search);
+    const photographerId = parseInt(params.get("id"), 10);
 
-      const sectionGalery = document.createElement("section");
-      sectionGalery.classList.add("galery");
-      sectionGalery.setAttribute("aria-label", `Galerie des médias du photographe ${photograph.name}`);
-
-      // AJOUT : filtrage des médias pour le bon photographe grâce a son id
-      const mediasData = medias.filter(
-        (item) => item.photographerId === photographerId
-      );
-
-      mediasData.forEach(async (media) => {
-        const { title, image, video, likes, date, price } = media;
-
-        // Création du conteneur de galerie pour chaque média
-        const galeryPhotograph = document.createElement("div");
-        galeryPhotograph.classList.add("galery");
-        galeryPhotograph.setAttribute("aria-label", `Média : ${title}`);
-        sectionGalery.appendChild(galeryPhotograph);
-
-        // Création d'un élément individuel de la galerie
-        const elementGalery = document.createElement("div");
-        elementGalery.classList.add("element_galery");
-        elementGalery.setAttribute("aria-label", `Conteneur du média ${title}`);
-        elementGalery.setAttribute("tabindex", "0");
-        galeryPhotograph.appendChild(elementGalery);
-
-        const folderName = await getFolderName(photographerId);
-
-        // Lien entre le bouton "X" et la fonction
-        const closeLightBoxBtn = document.querySelector(".closeLightBox");
-        closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
-        closeLightBoxBtn.setAttribute("role", "button");
-        closeLightBoxBtn.setAttribute("aria-label", "Fermer la visionneuse de médias");
-
+    // Création de la section contenant la galerie
+    const sectionGalery = document.createElement("section");
+    sectionGalery.classList.add("galery");
+    sectionGalery.setAttribute("aria-label", `Galerie des médias du photographe ${photograph.name}`);
+  
+    // AJOUT : filtrage des médias pour le bon photographe grâce a son id
+    const mediasData = medias.filter(
+      (item) => item.photographerId === photographerId
+    );
+  
+  // On prépare la liste des médias pour la navigation dans la lightbox
+  getFolderName(photographerId).then(folderName => {
+    const mediaList = mediasData.map(media => ({
+      src: media.image 
+        ? `assets/photographers/Sample-photos/${folderName}/${media.image}` 
+        : `assets/photographers/Sample-photos/${folderName}/${media.video}`,
+      title: media.title,
+      type: media.image ? "image" : "video"
+  }));
+  
+    // Parcours de chaque média du photographe pour générer dynamiquement les éléments HTML de la galerie,
+    // tout en conservant l'index `i` pour associer chaque média à sa position dans `mediaList` (utile pour la lightbox).
+    mediasData.forEach((media, i) => {
+      const { title, image, video, likes } = media;
+  
+      // Création du conteneur de galerie pour chaque média
+      const galeryPhotograph = document.createElement("div");
+      galeryPhotograph.classList.add("galery");
+      galeryPhotograph.setAttribute("aria-label", `Média : ${title}`);
+      sectionGalery.appendChild(galeryPhotograph);
+    
+      // Création d'un élément individuel de la galerie
+      const elementGalery = document.createElement("div");
+      elementGalery.classList.add("element_galery");
+      elementGalery.setAttribute("aria-label", `Conteneur du média ${title}`);
+      elementGalery.setAttribute("tabindex", "0");
+      galeryPhotograph.appendChild(elementGalery);
+    
+      // Lien entre le bouton "X" et la fonction
+      const closeLightBoxBtn = document.querySelector(".closeLightBox");
+      closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
+      closeLightBoxBtn.setAttribute("role", "button");
+      closeLightBoxBtn.setAttribute("aria-label", "Fermer la visionneuse de médias");
+  
         if (image) {
           const img = document.createElement("img");
-          img.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${image}`);
+          img.setAttribute("src", mediaList[i].src);
           img.setAttribute("alt", title);
           img.classList.add("element_galery", "img");
           img.setAttribute("aria-label", `Image : ${title}`);
@@ -166,29 +178,29 @@ export function constructPhotographerPage(photograph, medias) {
 
           // Ajout d'événement pour ouvrir la lightbox afin d'agrandir les médias
           img.addEventListener("click", () =>
-            displayLightBox(img.src, title, "image")
+            displayLightBox(mediaList[i].src, mediaList[i].title, mediaList[i].type, mediaList, i)
           );
-
-          //Ajout de l'évènement pour ouvrir la lightbox mais avec la touche "Enter"
+    
+          // Ajout de l'évènement pour ouvrir la lightbox mais avec la touche "Enter"
           img.addEventListener("keyup", (e) => {
             if (e.key === "Enter" || e.key === " ") {
-              displayLightBox(img.src, title, "image");
+              displayLightBox(mediaList[i].src, mediaList[i].title, mediaList[i].type, mediaList, i);
             }
-          });
-
+    });
+  
         } else if (video) {
           const vid = document.createElement("video");
           vid.setAttribute("controls", true);
           vid.setAttribute("aria-label", `Vidéo : ${title}`);
           const source = document.createElement("source");
-          source.setAttribute("src", `assets/photographers/Sample-photos/${folderName}/${video}`);
+          source.setAttribute("src", mediaList[i].src);
           source.setAttribute("type", "video/mp4");
           vid.appendChild(source);
           elementGalery.appendChild(vid);
 
           // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
           vid.addEventListener("click", () =>
-            displayLightBox(source.src, title, "video")
+            displayLightBox(mediaList[i].src, mediaList[i].title, mediaList[i].type, mediaList, i)
           );
         }
 
@@ -227,6 +239,8 @@ export function constructPhotographerPage(photograph, medias) {
         numberLikes.setAttribute("aria-label", `Compteur de likes ${likes}`);
         boxLike.appendChild(numberLikes);
 
+        // Création de la piste de chiffres (digitTrack) qui contient toutes les valeurs possibles du compteur de likes,
+        // elle permet l'effet visuel de rouleau en défilant verticalement selon la valeur actuelle.
         const digitTrack = document.createElement("div");
         digitTrack.classList.add("digital-Track");
         numberLikes.appendChild(digitTrack);
@@ -240,7 +254,7 @@ export function constructPhotographerPage(photograph, medias) {
           digitTrack.appendChild(line);
         }
 
-        // Position initiale
+        // Positionne la piste (digitTrack) de sorte à afficher le bon nombre de likes en simulant un défilement vertical
         digitTrack.style.transform = `translateY(-${currentLikeValue * 40}px)`;
 
         // variable qui me permet de rajouter ou enlever 1 like par utilisateur / par media
@@ -282,12 +296,14 @@ export function constructPhotographerPage(photograph, medias) {
           window.totalLikesTrack.style.transform = `translateY(-${
             window.totalLikesValue * 40}px)`;
         });
-        
+
+        //Coeur pour le design du like du titre du média 
         const heart = document.createElement("div");
         heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
         boxLike.appendChild(heart);
       });
-
+    });
+      // Retourne la section complète contenant tous les éléments médias générés pour affichage sur la page du photographe
       return sectionGalery;
 
     } catch (error) {
@@ -297,6 +313,8 @@ export function constructPhotographerPage(photograph, medias) {
       );
     }
   }
-
+  // Retourne les deux fonctions principales de construction de la page :
+  // - `getcardHeaderProtograph` : génère l'en-tête du profil du photographe
+  // - `displayMediasTemplate` : génère dynamiquement la galerie de ses médias avec interactions
   return { getcardHeaderProtograph, displayMediasTemplate };
 }
