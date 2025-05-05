@@ -10,13 +10,13 @@ export function dropdownOpenList() {
     // Ajout du label "Trier par"
     const labelOrderby = document.createElement("label");
     labelOrderby.textContent = `Trier par`;
+    labelOrderby.setAttribute("for", "dropdownButton");
     sectionOrderBy.appendChild(labelOrderby);
 
     // Création du composant dropdown
     const dropdown = document.createElement("div");
     dropdown.classList.add("dropdown");
     dropdown.tabIndex = 0;
-    dropdown.setAttribute('tabindex', '0');
     dropdown.setAttribute('role', 'button');
     dropdown.setAttribute('aria-label', `Trier par`);
     sectionOrderBy.appendChild(dropdown);
@@ -24,6 +24,7 @@ export function dropdownOpenList() {
     // Élément affiché par défaut (sélection actuelle)
     const selected = document.createElement("div");
     selected.classList.add("dropdown__selected");
+    selected.tabIndex = 0;
     let currentSelected = 'popularity';
     selected.innerHTML = `Popularité <i class="fa-solid fa-angle-down"></i>`;
     dropdown.appendChild(selected);
@@ -69,13 +70,15 @@ export function dropdownOpenList() {
                 li.dataset.value = opt.value;
                 li.textContent = opt.text;
                 li.setAttribute("role", "option");
+                li.tabIndex = 0;
 
-
+                // Gestion du clic sur une option
                 li.addEventListener("click", () => {
                     currentSelected = opt.value;
                     selected.innerHTML = `${opt.text} <i class="chevron fa-solid fa-angle-up"></i>`;
                     renderList(currentSelected);
                     list.classList.toggle("hidden");
+                    sortAndDisplayMedia(currentSelected)
                 });
                 list.appendChild(li);
             }
@@ -87,22 +90,67 @@ export function dropdownOpenList() {
 
     // Gestion de l'ouverture/fermeture du menu
     selected.addEventListener("click", () => {
+        const isHidden = list.classList.contains("hidden");
         list.classList.toggle("hidden");
-        const isOpen = list.classList.includes("hidden");
+
         const currentText = selected.textContent.trim().split(" ")[0];
         let chevronClass;
-            if (isOpen) {
+            if (isHidden) {
                 chevronClass = 'fa-angle-up';
             } else {
                 chevronClass = 'fa-angle-down';
             }
         selected.innerHTML = `${currentText} <i class="chevron fa-solid ${chevronClass}"></i>`;
+        
+        if (isHidden) {
+            const firstItem = list.querySelector("li");
+            if (firstItem) firstItem.focus();
+        }
     });
 
-    dropdown.addEventListener("blur", () => {
-        list.classList.add("hidden");
-        const currentText = selected.textContent.trim().split(" ")[0];
-        selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
+    // Support clavier pour ouvrir le menu pour trier et le manipuler
+    selected.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selected.click();
+        }
+    });
+    list.addEventListener("keydown", (e) => {
+        const items = Array.from(list.querySelectorAll("li"));
+        const index = items.indexOf(document.activeElement);
+    
+        if (["ArrowDown", "ArrowUp"].includes(e.key)) {
+            e.preventDefault(); // bloque le scroll du body
+        }
+    
+        if (e.key === "ArrowDown") {
+            items[(index + 1) % items.length].focus();
+        } else if (e.key === "ArrowUp") {
+            items[(index - 1 + items.length) % items.length].focus();
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            const li = document.activeElement;
+            if (li.tagName === "LI") {
+                const value = li.dataset.value;
+                const text = li.textContent;
+    
+                currentSelected = value;
+                selected.innerHTML = `${text} <i class="chevron fa-solid fa-angle-up"></i>`;
+                renderList(currentSelected);
+                list.classList.add("hidden");
+                sortAndDisplayMedia(currentSelected, mediaList);
+                selected.focus(); // revient sur le bouton
+            }
+        }
+    });
+
+    // Ferme le menu uniquement si on sort totalement du dropdown
+    dropdown.addEventListener("focusout", (e) => {
+        if (!dropdown.contains(e.relatedTarget)) {
+            list.classList.add("hidden");
+            const currentText = selected.textContent.trim().split(" ")[0];
+            selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down\"></i>`;
+        }
     });
 
     main.appendChild(sectionOrderBy);
