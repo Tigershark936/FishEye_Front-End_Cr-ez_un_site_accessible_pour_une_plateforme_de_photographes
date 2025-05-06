@@ -133,7 +133,8 @@ main{
         border-top: 1px solid white;
         cursor: pointer;
 
-        &:hover {
+        &:hover,
+        &:focus  {
           background-color: #DB8876;
         }
       }
@@ -284,11 +285,10 @@ main{
   top: 0;
   left: 0;
   display: none;
-  background-color: rgba(255, 255, 255, 0.747); // fond blanc opaque
+  background-color: rgba(255, 255, 255, 0.897); // fond blanc opaque
   z-index: 120;
   
   .mediaLightBox{
-    border: 1px solid #95fff9;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -303,7 +303,6 @@ main{
       transform: translate(-50%);
       width: 1050px;
       height: 900px;
-      background-color: green;
       overflow: hidden;
 
       img, video {

@@ -1,4 +1,3 @@
-// Création de la section selected-filter
 export function dropdownOpenList() {
   const main = document.getElementById("main");
 
@@ -41,6 +40,16 @@ export function dropdownOpenList() {
     { value: "title", text: "Titre" },
   ];
 
+  // Détection du mode d'interaction (clavier ou souris)
+  let interactionMode = "mouse";
+  window.addEventListener("keydown", () => {
+    interactionMode = "keyboard";
+  });
+  window.addEventListener("mousedown", () => {
+    interactionMode = "mouse";
+  });
+
+  // Fonction de tri et d'affichage des médias
   function sortAndDisplayMedia(sortBy) {
     const sortedMedia = [...Array.data];
     switch (sortBy) {
@@ -73,8 +82,9 @@ export function dropdownOpenList() {
           currentSelected = opt.value;
           selected.innerHTML = `${opt.text} <i class="chevron fa-solid fa-angle-up"></i>`;
           renderList(currentSelected);
-          list.classList.toggle("hidden");
+          list.classList.add("hidden");
           sortAndDisplayMedia(currentSelected);
+          selected.focus(); // revient sur le bouton
         });
         list.appendChild(li);
       }
@@ -90,15 +100,11 @@ export function dropdownOpenList() {
     list.classList.toggle("hidden");
 
     const currentText = selected.textContent.trim().split(" ")[0];
-    let chevronClass;
-    if (isHidden) {
-      chevronClass = "fa-angle-up";
-    } else {
-      chevronClass = "fa-angle-down";
-    }
+    let chevronClass = isHidden ? "fa-angle-up" : "fa-angle-down";
     selected.innerHTML = `${currentText} <i class="chevron fa-solid ${chevronClass}"></i>`;
 
-    if (isHidden) {
+    // Focus uniquement si ouvert au clavier
+    if (isHidden && interactionMode === "keyboard") {
       const firstItem = list.querySelector("li");
       if (firstItem) firstItem.focus();
     }
@@ -111,6 +117,7 @@ export function dropdownOpenList() {
       selected.click();
     }
   });
+
   list.addEventListener("keydown", (e) => {
     const items = Array.from(list.querySelectorAll("li"));
     const index = items.indexOf(document.activeElement);
@@ -134,7 +141,7 @@ export function dropdownOpenList() {
         selected.innerHTML = `${text} <i class="chevron fa-solid fa-angle-up"></i>`;
         renderList(currentSelected);
         list.classList.add("hidden");
-        sortAndDisplayMedia(currentSelected, mediaList);
+        sortAndDisplayMedia(currentSelected);
         selected.focus(); // revient sur le bouton
       }
     }
@@ -145,7 +152,7 @@ export function dropdownOpenList() {
     if (!dropdown.contains(e.relatedTarget)) {
       list.classList.add("hidden");
       const currentText = selected.textContent.trim().split(" ")[0];
-      selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down\"></i>`;
+      selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
     }
   });
 

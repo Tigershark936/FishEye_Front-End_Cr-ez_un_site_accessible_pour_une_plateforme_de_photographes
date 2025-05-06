@@ -124,7 +124,7 @@ main {
   border-top: 1px solid white;
   cursor: pointer;
 }
-.section .dropdown__list li:hover {
+.section .dropdown__list li:hover, .section .dropdown__list li:focus {
   background-color: #DB8876;
 }
 .section .dropdown__list.hidden {
@@ -250,11 +250,10 @@ main {
   top: 0;
   left: 0;
   display: none;
-  background-color: rgba(255, 255, 255, 0.747);
+  background-color: rgba(255, 255, 255, 0.897);
   z-index: 120;
 }
 .lightBox .mediaLightBox {
-  border: 1px solid #95fff9;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -269,7 +268,6 @@ main {
   transform: translate(-50%);
   width: 1050px;
   height: 900px;
-  background-color: green;
   overflow: hidden;
 }
 .lightBox .mediaLightBox .lightbox-content img, .lightBox .mediaLightBox .lightbox-content video {

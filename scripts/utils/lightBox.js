@@ -1,3 +1,4 @@
+//Fichier pour l'action de la Lightbox 
 const titleMediaLightBox = document.querySelector(".titleMedia");
 titleMediaLightBox.setAttribute("tabindex", "0");
 

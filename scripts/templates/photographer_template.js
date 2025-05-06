@@ -1,4 +1,4 @@
-import { displayLightBox, handleCloseLightBox } from "../utils/lightBox.js";
+import { displayLightBox} from "../utils/lightBox.js";
 import { getFolderName } from "../utils/getFolderName.js";
 import { getTotalLikesForPhotographer } from "../utils/getTotalLikesForPhotographer.js";
 
