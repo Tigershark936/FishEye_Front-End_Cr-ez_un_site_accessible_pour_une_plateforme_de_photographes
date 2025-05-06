@@ -206,7 +206,8 @@ main {
 .boxLikeAndPrice {
   display: flex;
   justify-content: space-around;
-  padding-top: 21px;
+  align-items: center;
+  padding-top: 0;
   position: fixed;
   bottom: 0;
   right: 36px;
@@ -220,12 +221,16 @@ main {
 }
 .boxLikeAndPrice .totalLike {
   display: flex;
-  height: 30px;
+  height: 40px;
   gap: 6px;
   align-items: center;
   overflow: hidden;
 }
 .boxLikeAndPrice .totalLike .digital-Track {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   transition: transform 0.3s ease-out;
 }
 .boxLikeAndPrice .totalLike .digital-Track div {
