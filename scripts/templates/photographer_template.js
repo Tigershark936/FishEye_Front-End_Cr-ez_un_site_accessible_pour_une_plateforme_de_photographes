@@ -202,15 +202,6 @@ export function constructPhotographerPage(photograph, medias) {
           elementGalery.setAttribute("tabindex", "0");
           galeryPhotograph.appendChild(elementGalery);
 
-          // Lien entre le bouton "X" et la fonction
-          const closeLightBoxBtn = document.querySelector(".closeLightBox");
-          closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
-          closeLightBoxBtn.setAttribute("role", "button");
-          closeLightBoxBtn.setAttribute(
-            "aria-label",
-            "Fermer la visionneuse de médias"
-          );
-
           if (image) {
             const img = document.createElement("img");
             img.setAttribute("src", mediaList[i].src);

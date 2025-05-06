@@ -1,4 +1,5 @@
 const titleMediaLightBox = document.querySelector(".titleMedia");
+titleMediaLightBox.setAttribute("tabindex", "0");
 
 let MediaIndex = 0;
 let currentMediaList = [];
@@ -80,15 +81,6 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   console.log("Clicked", src, title, type);
 }
 
-export function handleCloseLightBox() {
-  const lightBox = document.querySelector(".lightBox");
-  lightBox.setAttribute("aria-hidden", "true");
-  lightBox.style.display = "none";
-
-  // Rendre le fond à nouveau accessible
-  main.removeAttribute("inert");
-}
-
 //Gère les interactions clavier dans la lightbox.
 function handleKeydownLightBox(e) {
   //Flèche gauche (←) : affiche le média précédent
@@ -104,3 +96,19 @@ function handleKeydownLightBox(e) {
   }
   document.addEventListener("keydown", handleKeydownLightBox);
 }
+
+//le bouton "X" pour fermer la lightBox et la fonction
+const closeLightBoxBtn = document.querySelector(".closeLightBox");
+closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
+closeLightBoxBtn.setAttribute("role", "button");
+closeLightBoxBtn.setAttribute("aria-label", "Fermer la visionneuse de médias");
+
+export function handleCloseLightBox() {
+  const lightBox = document.querySelector(".lightBox");
+  lightBox.setAttribute("aria-hidden", "true");
+  lightBox.style.display = "none";
+
+  // Rendre le fond à nouveau accessible
+  main.removeAttribute("inert");
+}
+

@@ -229,17 +229,17 @@ main {
   z-index: 120;
 }
 .lightBox .mediaLightBox {
-  border: 2px solid #95fff9;
+  border: 1px solid #95fff9;
   position: fixed;
-  top: 40px;
-  left: 100px;
-  width: 90vw;
-  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1242px;
+  height: 900px;
   position: relative;
 }
 .lightBox .mediaLightBox .lightbox-content {
   position: absolute;
-  top: 22px;
   left: 50%;
   transform: translate(-50%);
   width: 1050px;
@@ -258,9 +258,12 @@ main {
   margin: auto;
 }
 .lightBox .mediaLightBox .titleMedia {
+  position: absolute;
   font-weight: 400;
   font-size: 1.5rem;
   color: #901c1c;
+  bottom: -40px;
+  left: 7.5%;
 }
 .lightBox .mediaLightBox .control-btn {
   background: transparent;
@@ -274,9 +277,11 @@ main {
   font-size: 48px;
 }
 .lightBox .mediaLightBox .closeLightBox {
-  top: 10%;
+  width: 72px;
+  height: 72px;
+  top: 4%;
   transform: translateY(-50%);
-  right: 0;
+  right: 15px;
 }
 .lightBox .mediaLightBox .previous-btn {
   top: 50%;
