@@ -166,26 +166,50 @@ main{
   }
   
   .info-img {
-    max-width: calc(100% - 1px);
-    justify-content: space-between;
     display: flex;
+    justify-content: space-between;
+    align-items: center; // centrer verticalement (optionnel)
     color: #901C1C;
     font-size: 1.5rem;
 
-    h3{
-      font-weight: 400;
+    .titleMedia-wrapper {
+      flex: 1 1 auto; // prend la place dispo mais sans forcer
+      max-width: 300px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      position: relative;
+    }
+
+    .titleMedia {
+      font-weight: 400;
+      display: inline-block;
       white-space: nowrap;
+      min-width: 100%;
+      transform: translateX(0);
+      cursor: pointer;
+
+     // seulement si la classe "scrollable" est présente dans l'élement du JS
+      &.scrollable:hover, 
+      &.scrollable:focus {
+        animation: scroll-left 3s linear infinite;
+      }
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
     }
 
     .boxlike {
+      flex-shrink: 0; //empêche d’être écrasé par le titre
       display: flex;
       gap: 6.65px;
       align-items: center;
       cursor: pointer;
 
-      //Compteur à rouleau unique
       .numberLikes-counter {
         overflow: hidden;
         height: 40px;
@@ -207,6 +231,7 @@ main{
     }
   }
 }
+
   
 
 .boxLikeAndPrice{

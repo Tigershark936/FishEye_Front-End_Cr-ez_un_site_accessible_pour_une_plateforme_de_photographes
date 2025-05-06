@@ -256,6 +256,8 @@ export function constructPhotographerPage(photograph, medias) {
             );
           }
 
+          const MAX_VISIBLE_CHARS = 19;
+
           // Titre de l'élément photo ou vidéo
           const txtElement = document.createElement("div");
           txtElement.classList.add("info-img");
@@ -265,13 +267,26 @@ export function constructPhotographerPage(photograph, medias) {
           );
           elementGalery.appendChild(txtElement);
 
+          // Création du wrapper fixe
+          const titleWrapper = document.createElement("div");
+          titleWrapper.classList.add("titleMedia-wrapper");
+
           // Titre de l'élément photo ou vidéo
           const titleMedia = document.createElement("h3");
-          titleMedia.textContent = `${title}`;
-          titleMedia.classList.add("h3");
+          titleMedia.textContent = title;
+          titleMedia.classList.add("titleMedia");
           titleMedia.setAttribute("aria-label", `Titre : ${title}`);
           titleMedia.setAttribute("tabindex", "0");
-          txtElement.appendChild(titleMedia);
+
+          // console.log("Titre :", title, "| Longueur :", title.length);
+          
+          // Ajoute l'effet de défilement uniquement si le texte est trop long
+          if (title.length > MAX_VISIBLE_CHARS) {
+            titleMedia.classList.add("scrollable"); // cette classe active l'animation CSS
+          }
+
+          titleWrapper.appendChild(titleMedia);
+          txtElement.appendChild(titleWrapper);
 
           // Compteur de likes à rouleau unique et le heart ===
           const boxLike = document.createElement("div");
