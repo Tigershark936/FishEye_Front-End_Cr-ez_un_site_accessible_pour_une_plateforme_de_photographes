@@ -16,11 +16,11 @@ function displayModal() {
 
   // Écoute de la touche Échap pour fermer le formulary de contact
   document.addEventListener("keydown", handleEscape);
-}     
+}
 
 function closeModal() {
   const modal = document.getElementById("contact_modal");
-  modal.setAttribute('aria-hidden', 'true')
+  modal.setAttribute("aria-hidden", "true");
   modal.style.display = "none";
 
   // Rendre le fond à nouveau accessible
@@ -28,29 +28,29 @@ function closeModal() {
 }
 
 function handleEscape(e) {
-  if (e.key === "Escape" || e.key === "Esc") {  
-  closeModal();
+  if (e.key === "Escape" || e.key === "Esc") {
+    closeModal();
   }
 }
 
 // Gestion du submit du formulaire
-const form = document.querySelector('#contact_modal');
+const form = document.querySelector("#contact_modal");
 if (form) {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault()
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  const firstname = document.getElementById("firstname").value;
-  const surname = document.getElementById("surname").value;
-  const email = document.getElementById("email").value;
-  const message = document.getElementById("contact_message").value;
+    const firstname = document.getElementById("firstname").value;
+    const surname = document.getElementById("surname").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("contact_message").value;
 
-  console.log("Formulaire soumis :", {
-    firstname,
-    surname,
-    email,
-    message
-  });
+    console.log("Formulaire soumis :", {
+      firstname,
+      surname,
+      email,
+      message,
+    });
 
-  closeModal();
+    closeModal();
   });
 }

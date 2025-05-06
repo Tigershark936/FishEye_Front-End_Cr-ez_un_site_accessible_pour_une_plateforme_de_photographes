@@ -7,7 +7,7 @@
  * @returns {number} Le total des likes pour ce photographe
  */
 export function getTotalLikesForPhotographer(medias, photographerId) {
-return medias
+  return medias
     .filter((media) => media.photographerId === photographerId)
     .reduce((total, media) => total + media.likes, 0);
 }
