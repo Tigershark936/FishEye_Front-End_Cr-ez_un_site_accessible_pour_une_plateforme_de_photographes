@@ -1,4 +1,8 @@
-export function dropdownOpenList() {
+// === Fichier : selectFilter.js ===
+
+import { constructPhotographerPage } from "../templates/photographer_template.js";
+
+export function dropdownOpenList(medias, photograph) {
   const main = document.getElementById("main");
 
   // Création du conteneur principal (section)
@@ -24,23 +28,23 @@ export function dropdownOpenList() {
   selected.classList.add("dropdown__selected");
   selected.tabIndex = 0;
   let currentSelected = "popularity";
-  selected.innerHTML = `Popularité <i class="fa-solid fa-angle-down"></i>`;
+  selected.innerHTML = `Popularité <i class=\"fa-solid fa-angle-down\"></i>`;
   dropdown.appendChild(selected);
 
-  // Liste déroulante
+  // Liste déroulante des options
   const list = document.createElement("ul");
   list.classList.add("dropdown__list", "hidden");
   list.setAttribute("role", "listbox");
   dropdown.appendChild(list);
 
-  // Options disponibles
+  // Options disponibles dans la liste
   const options = [
     { value: "popularity", text: "Popularité" },
     { value: "date", text: "Date" },
     { value: "title", text: "Titre" },
   ];
 
-  // Détection du mode d'interaction (clavier ou souris)
+  // Détection du mode d'interaction pour l'action du style hover ou focus(clavier ou souris)
   let interactionMode = "mouse";
   window.addEventListener("keydown", () => {
     interactionMode = "keyboard";
@@ -51,7 +55,13 @@ export function dropdownOpenList() {
 
   // Fonction de tri et d'affichage des médias
   function sortAndDisplayMedia(sortBy) {
-    const sortedMedia = [...Array.data];
+    const params = new URLSearchParams(window.location.search);
+    const photographerId = parseInt(params.get("id"), 10);
+    const photographerMedias = medias.filter(
+      (m) => m.photographerId === photographerId
+    );
+    const sortedMedia = [...photographerMedias];
+
     switch (sortBy) {
       case "popularity":
         sortedMedia.sort((a, b) => b.likes - a.likes);
@@ -63,7 +73,19 @@ export function dropdownOpenList() {
         sortedMedia.sort((a, b) => a.title.localeCompare(b.title));
         break;
     }
-    displayMedia(sortedMedia);
+
+    // Supprime l'ancienne galerie avant d'afficher la nouvelle triée,
+    // puis régénère dynamiquement la galerie avec les médias triés
+    // et l'insère dans le DOM principal.
+    const galerySection = document.querySelector(".galery");
+    if (galerySection) galerySection.remove();
+
+    const { displayMediasTemplate } = constructPhotographerPage(
+      photograph,
+      medias
+    );
+    const newGallery = displayMediasTemplate(sortedMedia);
+    main.appendChild(newGallery);
   }
 
   // Fonction pour rendre les options sélectionnées (en cachant l'actuelle)
@@ -152,7 +174,7 @@ export function dropdownOpenList() {
     if (!dropdown.contains(e.relatedTarget)) {
       list.classList.add("hidden");
       const currentText = selected.textContent.trim().split(" ")[0];
-      selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
+      selected.innerHTML = `${currentText} <i class=\"chevron fa-solid fa-angle-down\"></i>`;
     }
   });
 

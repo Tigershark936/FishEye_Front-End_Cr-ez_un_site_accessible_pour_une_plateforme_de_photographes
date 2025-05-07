@@ -11,7 +11,7 @@ export function constructPhotographerPage(photograph, medias) {
       "En-tête du profil du photographe"
     );
 
-    // Création de la description du photographe
+    // Création de la boite de description du photographe
     const photographDescription = document.createElement("div");
     photographDescription.classList.add("photograph__description");
     photographDescription.setAttribute(
@@ -96,12 +96,12 @@ export function constructPhotographerPage(photograph, medias) {
       photographerId
     );
 
-    console.log("Photographer ID depuis l'URL :", photographerId);
-    console.log(
-      "Médias pour ce photographe :",
-      medias.filter((m) => m.photographerId === photographerId)
-    );
-    console.log("Total des likes calculés :", totalLikesCount);
+    // console.log("Photographer ID depuis l'URL :", photographerId);
+    // console.log(
+    //   "Médias pour ce photographe :",
+    //   medias.filter((m) => m.photographerId === photographerId)
+    // );
+    // console.log("Total des likes calculés :", totalLikesCount);
 
     // Création du compteur total des likes du photographe
     const totalLikes = document.createElement("div");
@@ -153,7 +153,7 @@ export function constructPhotographerPage(photograph, medias) {
   }
 
   // Fonction qui récupère les médias du bon photographe et les affiche
-  function displayMediasTemplate() {
+  function displayMediasTemplate(mediasOverride = null) {
     try {
       const params = new URLSearchParams(window.location.search);
       const photographerId = parseInt(params.get("id"), 10);
@@ -167,7 +167,7 @@ export function constructPhotographerPage(photograph, medias) {
       );
 
       // AJOUT : filtrage des médias pour le bon photographe grâce a son id
-      const mediasData = medias.filter(
+      const mediasData = (mediasOverride || medias).filter(
         (item) => item.photographerId === photographerId
       );
 
@@ -222,7 +222,7 @@ export function constructPhotographerPage(photograph, medias) {
               )
             );
 
-            // Ajout de l'évènement pour ouvrir la lightbox mais avec la touche "Enter"
+            // Ajout de l'évènement pour ouvrir la photo dans la lightbox mais avec la touche "Enter"
             img.addEventListener("keyup", (e) => {
               if (e.key === "Enter" || e.key === " ") {
                 displayLightBox(
@@ -244,18 +244,31 @@ export function constructPhotographerPage(photograph, medias) {
             vid.appendChild(source);
             elementGalery.appendChild(vid);
 
-            // Ajout d'événement pour ouvrir la lightbox afin d''agrandir les médias
+            // Ajout d'événement pour ouvrir la lightbox afin d'agrandir les médias
             vid.addEventListener("click", () =>
               displayLightBox(
-                mediaList[i].src,
+                mediaList[i].src,                       
                 mediaList[i].title,
                 mediaList[i].type,
                 mediaList,
                 i
               )
             );
+            // Ajout de l'évènement pour ouvrir vidéo dans la lightbox mais avec la touche "Enter"
+            vid.addEventListener("keyup", (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                displayLightBox(
+                  mediaList[i].src,
+                  mediaList[i].title,
+                  mediaList[i].type,
+                  mediaList,
+                  i
+                );
+              }
+            });
           }
-
+          
+          // Nombre maximal de caractères visibles
           const MAX_VISIBLE_CHARS = 19;
 
           // Titre de l'élément photo ou vidéo
