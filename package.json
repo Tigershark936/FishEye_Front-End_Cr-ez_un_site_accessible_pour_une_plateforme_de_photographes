@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "http-server",
+    "lint": "eslint *.js"
+  },
+  "devDependencies": {
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0"
+  }
+}
