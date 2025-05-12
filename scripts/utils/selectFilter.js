@@ -28,7 +28,7 @@ export function dropdownOpenList(medias, photograph) {
   selected.classList.add("dropdown__selected");
   selected.tabIndex = 0;
   let currentSelected = "popularity";
-  selected.innerHTML = `Popularité <i class=\"fa-solid fa-angle-down\"></i>`;
+  selected.innerHTML = `Popularité <i class="fa-solid fa-angle-down"></i>`;
   dropdown.appendChild(selected);
 
   // Liste déroulante des options
@@ -174,7 +174,7 @@ export function dropdownOpenList(medias, photograph) {
     if (!dropdown.contains(e.relatedTarget)) {
       list.classList.add("hidden");
       const currentText = selected.textContent.trim().split(" ")[0];
-      selected.innerHTML = `${currentText} <i class=\"chevron fa-solid fa-angle-down\"></i>`;
+      selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
     }
   });
 

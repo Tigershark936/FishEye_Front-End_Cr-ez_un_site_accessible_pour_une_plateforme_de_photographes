@@ -1,6 +1,5 @@
 //Fichier pour l'action de la Lightbox 
-const titleMediaLightBox = document.querySelector(".titleMedia");
-titleMediaLightBox.setAttribute("tabindex", "0");
+const main = document.getElementById("main");
 
 let MediaIndex = 0;
 let currentMediaList = [];
@@ -63,7 +62,16 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   }
 
   contentLightBox.appendChild(mediaElement);
-  titleMediaLightBox.textContent = title;
+
+  // Crée le titre du média dans la lightbox
+  const titleElement = document.createElement("h4");
+  titleElement.classList.add("titleMedia");
+  titleElement.setAttribute("aria-label", "Titre du média en cours");
+  titleElement.setAttribute("tabindex", "0");
+  titleElement.textContent = title;
+  const containerLightBox = document.querySelector(".mediaLightBox");
+  containerLightBox.appendChild(titleElement);
+
 
   // Si mediaList est fourni, on met à jour les variables globales
   if (mediaList.length > 0) {

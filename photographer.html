@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link
-      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
-      rel="stylesheet"
-    />
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <title>Fisheye - photographe</title>
   </head>
@@ -15,7 +12,7 @@
   <body>
     <header>
       <a href="index.html" title="Fisheye Home page" aria-label="Aller à la page d'accueil de Fisheye">
-        <img src="assets/images/logo.png" class="logo" alt="Logo Fisheye"/>
+        <img src="assets/images/logo.png" class="logo" alt="Logo Fisheye">
       </a>
     </header>
 
@@ -23,7 +20,7 @@
 
     <div class="lightBox" role="dialog" aria-modal="true" aria-label="Visionneuse de médias">
       <div class="mediaLightBox">
-        <div class="lightbox-content" aria-live="polite" aria-label="Contenu affiché dans la lightbox"></div>
+        <div class="lightbox-content" aria-live="polite"></div>
         
         <button class="control-btn closeLightBox" aria-label="Fermer la lightbox">
           <i class="fa-solid fa-xmark" aria-hidden="true"></i>
@@ -36,7 +33,6 @@
           <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
         </button>
 
-        <h4 class="titleMedia" aria-label="Titre du média en cours"></h4>
       </div>
     </div>
 
@@ -45,24 +41,24 @@
       <div class="modal" tabindex="-1">
         <header>
           <h2 id="contact_modal_title">Contactez-moi</h2>
-          <button onclick="closeModal()" aria-label="Fermer la modale" class="modal-close-button">
-            <img src="assets/icons/close.svg" alt="Bouton pour fermer la modale"/>
+          <button aria-label="Fermer la modale" class="modal-close-button">
+            <img src="assets/icons/close.svg" alt="Bouton pour fermer la modale">
           </button>
         </header>
 
         <form>
           <div>
             <label for="firstname">Prénom</label>
-            <input type="text" name="firstname" id="firstname" aria-label="Prénom"/>
+            <input type="text" name="firstname" id="firstname" aria-label="Prénom">
         
             <label for="surname">Nom</label>
-            <input type="text" name="surname" id="surname" aria-label="Nom de famille"/>
+            <input type="text" name="surname" id="surname" aria-label="Nom de famille">
         
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" aria-label="Adresse email"/>
+            <input type="email" name="email" id="email" aria-label="Adresse email">
         
             <label for="contact_message">Votre message</label>
-            <input type="text" name="contact_message" id="contact_message" aria-label="Message pour le photographe"/>
+            <input type="text" name="contact_message" id="contact_message" aria-label="Message pour le photographe">
           </div>
         
           <button type="submit" aria-label="Envoyer le message au photographe" class="contact_button">Envoyer</button>

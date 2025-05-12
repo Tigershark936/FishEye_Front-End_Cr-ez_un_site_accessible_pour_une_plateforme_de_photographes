@@ -1,4 +1,6 @@
-function displayModal() {
+const main = document.getElementById("main");
+
+export function displayModal() {
   const modal = document.getElementById("contact_modal");
   const firstInput = modal.querySelector("input");
   modal.style.display = "block";
@@ -53,4 +55,10 @@ if (form) {
 
     closeModal();
   });
+}
+
+//AJOUT : fermeture via le bouton croix
+const closeBtn = document.querySelector(".modal-close-button");
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeModal);
 }
