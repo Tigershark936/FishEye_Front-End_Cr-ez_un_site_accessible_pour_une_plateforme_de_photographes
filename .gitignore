@@ -1,0 +1,8 @@
+### VS Code ###
+.vscode/
+
+### Node ###
+node_modules/
+package-lock.json
+build/
+dist/
