@@ -36,7 +36,7 @@ async function displayPhotographerData(photographer, medias) {
 async function init() {
   // Récupère les données depuis l'URL (id du photographe)
   const params = new URLSearchParams(window.location.search);
-  const photographerId = params.get("id");
+  const photographerId = parseInt(params.get("id"), 10);
 
   // Chargement des données via les services
   const photographer = await getPhotographerById(photographerId);

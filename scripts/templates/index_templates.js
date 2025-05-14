@@ -7,7 +7,7 @@ export function photographerTemplate(data, index) {
   function getUserCardDOM() {
     const a = document.createElement("a");
     // permet d'allez sur la page du photographe concerné en utilisant sa data.id "?id${id}"
-    a.setAttribute("href", `http://127.0.0.1:5500/photographer.html?id=${id}`);
+    a.setAttribute("href", `photographer.html?id=${id}`);
     //On utilise aria-labelledby pour avoir une structure claire et sémantique
     const nameId = `photographer-name-${id}`;
     a.setAttribute("aria-labelledby", nameId); // Le lien sera nommé par le h2

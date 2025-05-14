@@ -22,6 +22,25 @@
   display: none;
 }
 
+body {
+  font-family: "DM Sans", sans-serif;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+}
+
+.logo {
+  height: 50px;
+  margin-left: 100px;
+}
+
 main {
   margin: 0 100px;
 }
@@ -169,7 +188,7 @@ main {
   cursor: pointer;
 }
 .galery .info-img .titleMedia.scrollable:hover, .galery .info-img .titleMedia.scrollable:focus {
-  animation: scroll-left 3s linear infinite;
+  animation: scroll-left 3s linear infinite 0.6s;
 }
 @keyframes scroll-left {
   0% {
