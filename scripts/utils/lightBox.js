@@ -1,6 +1,7 @@
 //Fichier pour l'action de la Lightbox 
 const main = document.getElementById("main");
 
+// Variables globales pour gérer l'index courant et la liste de médias
 let MediaIndex = 0;
 let currentMediaList = [];
 
@@ -9,20 +10,15 @@ function handleMediaIndex(e) {
   const action = Number(e.currentTarget.getAttribute("data-action"));
   MediaIndex += action;
 
-  // Si on dépasse le premier média (index < 0), on revient au dernier (effet boucle)
   if (MediaIndex < 0) {
     MediaIndex = currentMediaList.length - 1;
-
-    // Si on dépasse le dernier média, on revient au premier (effet boucle)
   } else if (MediaIndex > currentMediaList.length - 1) {
     MediaIndex = 0;
   }
 
-  // Récupère le média correspondant au nouvel index
   const currentMedia = currentMediaList[MediaIndex];
-  console.log(currentMediaList);
 
-  // Affiche ce média dans la lightbox avec ses infos (src, titre, type)
+  // Réaffiche le média à l'index actue
   displayLightBox(
     currentMedia.src,
     currentMedia.title,
@@ -32,20 +28,25 @@ function handleMediaIndex(e) {
   );
 }
 
+// Fonction qui affiche la lightbox avec un média donné
 export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   const lightBox = document.querySelector(".lightBox");
+  const contentLightBox = lightBox.querySelector(".lightbox-content");
+  const containerLightBox = document.querySelector(".mediaLightBox");
+
+  // Affichage de la lightbox
   lightBox.setAttribute("role", "dialog");
   lightBox.setAttribute("aria-modal", "true");
   lightBox.setAttribute("aria-hidden", "false");
-  const contentLightBox = lightBox.querySelector(".lightbox-content");
-
-  // On vide le contenu précédent
   lightBox.style.display = "block";
-  contentLightBox.innerHTML = "";
 
-  // Rendre le fond inaccessible pour le Tab quand la lightBox est en block
+  // Empêche le focus sur le reste de la page
   main.setAttribute("inert", "");
 
+  // Vide l'ancien média
+  contentLightBox.innerHTML = "";
+
+  // Crée et Affiche l'image ou la vidéo
   let mediaElement;
   if (type === "image") {
     mediaElement = document.createElement("img");
@@ -63,61 +64,62 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
 
   contentLightBox.appendChild(mediaElement);
 
-  // Crée le titre du média dans la lightbox
+  // Supprime le titre précédent pour éviter l’empilement des titres
+  const oldTitle = containerLightBox.querySelector(".titleMedia");
+  if (oldTitle) oldTitle.remove();
+
+  // Ajoute le nouveau titre
   const titleElement = document.createElement("h4");
   titleElement.classList.add("titleMedia");
   titleElement.setAttribute("aria-label", "Titre du média en cours");
   titleElement.setAttribute("tabindex", "0");
   titleElement.textContent = title;
-  const containerLightBox = document.querySelector(".mediaLightBox");
   containerLightBox.appendChild(titleElement);
 
-
-  // Si mediaList est fourni, on met à jour les variables globales
+  // Met à jour la liste de médias et l’index si fournis
   if (mediaList.length > 0) {
     currentMediaList = mediaList;
     MediaIndex = index;
   }
 
+  // Ajout des écouteurs de navigation (flèches)
   const previousBtn = document.querySelector(".previous-btn");
   const nextBtn = document.querySelector(".next-btn");
 
-  previousBtn.addEventListener("click", handleMediaIndex);
-  nextBtn.addEventListener("click", handleMediaIndex);
+  previousBtn.onclick = handleMediaIndex;
+  nextBtn.onclick = handleMediaIndex;
 
+  // Ajout unique de l'écouteur clavier
+  document.removeEventListener("keydown", handleKeydownLightBox);
   document.addEventListener("keydown", handleKeydownLightBox);
-
-  console.log("Clicked", src, title, type);
 }
 
-//Gère les interactions clavier dans la lightbox.
+// Gère les raccourcis clavier dans la lightbox
 function handleKeydownLightBox(e) {
-  //Flèche gauche (←) : affiche le média précédent
   if (e.key === "ArrowLeft") {
     document.querySelector(".previous-btn").click();
-    //Flèche droite (→) : affiche le média suivant
   } else if (e.key === "ArrowRight") {
     document.querySelector(".next-btn").click();
   } else if (e.key === "Escape") {
-    //Touche Échap (Escape) : ferme la lightbox.
     handleCloseLightBox();
-    document.removeEventListener("keydown", handleKeydownLightBox);
   }
-  document.addEventListener("keydown", handleKeydownLightBox);
 }
 
-//le bouton "X" pour fermer la lightBox et la fonction
+// Bouton pour fermer la lightbox
 const closeLightBoxBtn = document.querySelector(".closeLightBox");
 closeLightBoxBtn.addEventListener("click", handleCloseLightBox);
 closeLightBoxBtn.setAttribute("role", "button");
 closeLightBoxBtn.setAttribute("aria-label", "Fermer la visionneuse de médias");
 
+// Ferme la lightbox proprement 
 export function handleCloseLightBox() {
   const lightBox = document.querySelector(".lightBox");
   lightBox.setAttribute("aria-hidden", "true");
   lightBox.style.display = "none";
 
-  // Rendre le fond à nouveau accessible
+  // Rendre à nouveau le fond accessible
   main.removeAttribute("inert");
-}
 
+  // Supprime l'écouteur clavier pour éviter doublons
+  document.removeEventListener("keydown", handleKeydownLightBox);
+}
