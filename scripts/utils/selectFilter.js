@@ -15,12 +15,20 @@ export function dropdownOpenList(medias, photograph) {
   labelOrderby.setAttribute("for", "dropdownButton");
   sectionOrderBy.appendChild(labelOrderby);
 
+  // Région live pour annoncer le tri
+  const liveRegionOrderBy = document.createElement("div");
+  liveRegionOrderBy.setAttribute("aria-live", "polite");
+  liveRegionOrderBy.classList.add("sr-only");
+  sectionOrderBy.appendChild(liveRegionOrderBy);
+
   // Création du composant dropdown
   const dropdown = document.createElement("div");
   dropdown.classList.add("dropdown");
   dropdown.tabIndex = 0;
-  dropdown.setAttribute("role", "button");
-  dropdown.setAttribute("aria-label", `Trier par`);
+  dropdown.setAttribute("id", "dropdownButton");
+  dropdown.setAttribute("role", "combobox");
+  dropdown.setAttribute("aria-haspopup", "listbox");
+  dropdown.setAttribute("aria-expanded", "false");
   sectionOrderBy.appendChild(dropdown);
 
   // Élément affiché par défaut (sélection actuelle)
@@ -28,14 +36,16 @@ export function dropdownOpenList(medias, photograph) {
   selected.classList.add("dropdown__selected");
   selected.tabIndex = 0;
   let currentSelected = "popularity";
-  selected.innerHTML = `Popularité <i class="fa-solid fa-angle-down"></i>`;
+  selected.innerHTML = `Popularité <span class="fa-solid fa-angle-down" aria-hidden="true"></span>`;
   dropdown.appendChild(selected);
 
   // Liste déroulante des options
   const list = document.createElement("ul");
   list.classList.add("dropdown__list", "hidden");
   list.setAttribute("role", "listbox");
+  list.setAttribute("id", "dropdownList");
   dropdown.appendChild(list);
+  dropdown.setAttribute("aria-controls", "dropdownList");
 
   // Options disponibles dans la liste
   const options = [
@@ -97,12 +107,14 @@ export function dropdownOpenList(medias, photograph) {
         li.dataset.value = opt.value;
         li.textContent = opt.text;
         li.setAttribute("role", "option");
+        li.setAttribute("aria-selected", "false");
+        li.setAttribute("id", `option-${opt.value}`);
         li.tabIndex = 0;
 
         // Gestion du clic sur une option
         li.addEventListener("click", () => {
           currentSelected = opt.value;
-          selected.innerHTML = `${opt.text} <i class="chevron fa-solid fa-angle-up"></i>`;
+          selected.innerHTML = `${opt.text} <span class="chevron fa-solid fa-angle-up" aria-hidden="true"></span>`;
           renderList(currentSelected);
           list.classList.add("hidden");
           sortAndDisplayMedia(currentSelected);
@@ -120,10 +132,12 @@ export function dropdownOpenList(medias, photograph) {
   selected.addEventListener("click", () => {
     const isHidden = list.classList.contains("hidden");
     list.classList.toggle("hidden");
+    dropdown.setAttribute("aria-expanded", String(!isHidden));
 
     const currentText = selected.textContent.trim().split(" ")[0];
     let chevronClass = isHidden ? "fa-angle-up" : "fa-angle-down";
-    selected.innerHTML = `${currentText} <i class="chevron fa-solid ${chevronClass}"></i>`;
+    selected.innerHTML = `${currentText} <span class="chevron fa-solid ${chevronClass}" aria-hidden="true"></span>`;
+    selected.setAttribute("aria-label", `Tri actuellement sélectionné : ${currentText}`);
 
     // Focus uniquement si ouvert au clavier
     if (isHidden && interactionMode === "keyboard") {
@@ -149,9 +163,13 @@ export function dropdownOpenList(medias, photograph) {
     }
 
     if (e.key === "ArrowDown") {
-      items[(index + 1) % items.length].focus();
+    const nextItem = items[(index + 1) % items.length];
+      nextItem.focus();
+      dropdown.setAttribute("aria-activedescendant", nextItem.id);
     } else if (e.key === "ArrowUp") {
-      items[(index - 1 + items.length) % items.length].focus();
+      const prevItem = items[(index - 1 + items.length) % items.length];
+      prevItem.focus();
+      dropdown.setAttribute("aria-activedescendant", prevItem.id);
     } else if (e.key === "Enter") {
       e.preventDefault();
       const li = document.activeElement;
@@ -160,11 +178,13 @@ export function dropdownOpenList(medias, photograph) {
         const text = li.textContent;
 
         currentSelected = value;
-        selected.innerHTML = `${text} <i class="chevron fa-solid fa-angle-up"></i>`;
+        selected.innerHTML = `${text} <span class="chevron fa-solid fa-angle-up" aria-hidden="true"></span>`;
+        selected.setAttribute("aria-label", `Tri actuellement sélectionné : ${text}`);
         renderList(currentSelected);
         list.classList.add("hidden");
         sortAndDisplayMedia(currentSelected);
         selected.focus(); // revient sur le bouton
+        liveRegionOrderBy.textContent = `Trié par ${text}`;
       }
     }
   });
@@ -173,8 +193,9 @@ export function dropdownOpenList(medias, photograph) {
   dropdown.addEventListener("focusout", (e) => {
     if (!dropdown.contains(e.relatedTarget)) {
       list.classList.add("hidden");
+      dropdown.setAttribute("aria-expanded", "false");
       const currentText = selected.textContent.trim().split(" ")[0];
-      selected.innerHTML = `${currentText} <i class="chevron fa-solid fa-angle-down"></i>`;
+       selected.innerHTML = `${currentText} <span class="chevron fa-solid fa-angle-down" aria-hidden="true"></span>`;
     }
   });
 

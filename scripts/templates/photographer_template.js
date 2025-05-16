@@ -134,7 +134,7 @@ export function constructPhotographerPage(photograph, medias) {
 
     // Ajout de l'icône cœur au compteur total
     const heart = document.createElement("div");
-    heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
+    heart.innerHTML = `<span class="fa-solid fa-heart" aria-hidden="true"></span>`;
     totalLikes.appendChild(heart);
 
     // Ajout du compteur total dans le conteneur
@@ -162,6 +162,7 @@ export function constructPhotographerPage(photograph, medias) {
       // Création de la section contenant la galerie
       const sectionGalery = document.createElement("section");
       sectionGalery.classList.add("galery");
+      sectionGalery.setAttribute("role", "list");
       sectionGalery.setAttribute(
         "aria-label",
         `Galerie des médias du photographe ${photograph.name}`
@@ -196,6 +197,7 @@ export function constructPhotographerPage(photograph, medias) {
           // Création d'un élément individuel de la galerie
           const elementGalery = document.createElement("div");
           elementGalery.classList.add("element_galery");
+          elementGalery.setAttribute("role", "listitem");
           elementGalery.setAttribute(
             "aria-label",
             `Conteneur du média ${title}`
@@ -206,7 +208,6 @@ export function constructPhotographerPage(photograph, medias) {
           if (image) {
             const img = document.createElement("img");
             img.setAttribute("src", mediaList[i].src);
-            img.setAttribute("alt", title);
             img.classList.add("element_galery", "img");
             img.setAttribute("aria-label", `Image : ${title}`);
             img.setAttribute("tabindex", "0");
@@ -391,7 +392,7 @@ export function constructPhotographerPage(photograph, medias) {
 
           //Coeur pour le design du like du titre du média
           const heart = document.createElement("div");
-          heart.innerHTML = `<i class="fa-solid fa-heart" aria-hidden="true"></i>`;
+          heart.innerHTML = `<span class="fa-solid fa-heart" aria-hidden="true"></span>`;
           boxLike.appendChild(heart);
         });
       });

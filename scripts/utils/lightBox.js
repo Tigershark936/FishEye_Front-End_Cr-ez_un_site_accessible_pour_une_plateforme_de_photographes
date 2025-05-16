@@ -18,7 +18,7 @@ function handleMediaIndex(e) {
 
   const currentMedia = currentMediaList[MediaIndex];
 
-  // Réaffiche le média à l'index actue
+  // Réaffiche le média à l'index actuel
   displayLightBox(
     currentMedia.src,
     currentMedia.title,
@@ -37,7 +37,7 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   // Affichage de la lightbox
   lightBox.setAttribute("role", "dialog");
   lightBox.setAttribute("aria-modal", "true");
-  lightBox.setAttribute("aria-hidden", "false");
+  lightBox.setAttribute("aria-labelledby", "lightbox-media-title");
   lightBox.style.display = "block";
 
   // Empêche le focus sur le reste de la page
@@ -71,10 +71,14 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   // Ajoute le nouveau titre
   const titleElement = document.createElement("h4");
   titleElement.classList.add("titleMedia");
+  titleElement.setAttribute("id", "lightbox-media-title");
   titleElement.setAttribute("aria-label", "Titre du média en cours");
   titleElement.setAttribute("tabindex", "0");
   titleElement.textContent = title;
   containerLightBox.appendChild(titleElement);
+
+  // Focus initial sur le titre du média lors de l'ouverture de la lightBox
+  titleElement.focus();
 
   // Met à jour la liste de médias et l’index si fournis
   if (mediaList.length > 0) {

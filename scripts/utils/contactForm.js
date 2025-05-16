@@ -6,12 +6,12 @@ export function displayModal() {
   modal.style.display = "block";
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("role", "dialog");
-  modal.setAttribute("aria-hidden", "false");
   modal.setAttribute("aria-labelledby", "contact_modal_title");
 
   // Rendre le fond inaccessible pour le Tab quand le form est en block
   main.setAttribute("inert", "");
 
+  // Mise au focus du premier champ du formulaire
   if (firstInput) {
     firstInput.focus();
   }
@@ -22,13 +22,14 @@ export function displayModal() {
 
 function closeModal() {
   const modal = document.getElementById("contact_modal");
-  modal.setAttribute("aria-hidden", "true");
   modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
 
   // Rendre le fond à nouveau accessible
   main.removeAttribute("inert");
 }
 
+// Gestion touche Échap
 function handleEscape(e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModal();
