@@ -170,12 +170,20 @@ main{
   display: flex;
   flex-wrap: wrap;
   gap: 20px 95px;
-  
+
+  &[role="list"] {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .element_galery {
     width: 350px;
     height: 351px;
-    // background-color: gold;
     overflow: hidden;
+
+    &[role="listitem"] {
+      list-style: none;
+    }
 
     img, video {
       width: 350px;

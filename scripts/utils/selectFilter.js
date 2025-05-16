@@ -12,6 +12,7 @@ export function dropdownOpenList(medias, photograph) {
   // Ajout du label "Trier par"
   const labelOrderby = document.createElement("label");
   labelOrderby.textContent = `Trier par`;
+  labelOrderby.setAttribute("id", "label-order-by");
   labelOrderby.setAttribute("for", "dropdownButton");
   sectionOrderBy.appendChild(labelOrderby);
 
@@ -29,6 +30,7 @@ export function dropdownOpenList(medias, photograph) {
   dropdown.setAttribute("role", "combobox");
   dropdown.setAttribute("aria-haspopup", "listbox");
   dropdown.setAttribute("aria-expanded", "false");
+  dropdown.setAttribute("aria-labelledby", "label-order-by");
   sectionOrderBy.appendChild(dropdown);
 
   // Élément affiché par défaut (sélection actuelle)
@@ -37,6 +39,7 @@ export function dropdownOpenList(medias, photograph) {
   selected.tabIndex = 0;
   let currentSelected = "popularity";
   selected.innerHTML = `Popularité <span class="fa-solid fa-angle-down" aria-hidden="true"></span>`;
+  selected.setAttribute("aria-label", "Option actuellement sélectionnée : Popularité");
   dropdown.appendChild(selected);
 
   // Liste déroulante des options

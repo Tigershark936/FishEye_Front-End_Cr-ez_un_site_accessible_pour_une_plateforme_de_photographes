@@ -77,8 +77,8 @@ export function displayLightBox(src, title, type, mediaList = [], index = 0) {
   titleElement.textContent = title;
   containerLightBox.appendChild(titleElement);
 
-  // Focus initial sur le titre du média lors de l'ouverture de la lightBox
-  titleElement.focus();
+  // // Focus initial sur le titre du média lors de l'ouverture de la lightBox
+  // titleElement.focus();
 
   // Met à jour la liste de médias et l’index si fournis
   if (mediaList.length > 0) {

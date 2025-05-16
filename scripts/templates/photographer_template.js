@@ -160,7 +160,7 @@ export function constructPhotographerPage(photograph, medias) {
       const photographerId = parseInt(params.get("id"), 10);
 
       // Création de la section contenant la galerie
-      const sectionGalery = document.createElement("section");
+      const sectionGalery = document.createElement("div");
       sectionGalery.classList.add("galery");
       sectionGalery.setAttribute("role", "list");
       sectionGalery.setAttribute(
@@ -183,27 +183,23 @@ export function constructPhotographerPage(photograph, medias) {
           type: media.image ? "image" : "video",
         }));
 
-        // Parcours de chaque média du photographe pour générer dynamiquement les éléments HTML de la galerie,
-        // tout en conservant l'index `i` pour associer chaque média à sa position dans `mediaList` (utile pour la lightbox).
+        // Pour chaque média du photographe, on génère dynamiquement un élément HTML de la galerie.
+        // Chaque média est associé à son index `i`, ce qui permet de savoir sa position dans `mediaList`.
+        // Cette information est utile notamment pour l'ouverture dans la lightbox.
         mediasData.forEach((media, i) => {
           const { title, image, video, likes } = media;
 
-          // Création du conteneur de galerie pour chaque média
-          const galeryPhotograph = document.createElement("div");
-          galeryPhotograph.classList.add("galery");
-          galeryPhotograph.setAttribute("aria-label", `Média : ${title}`);
-          sectionGalery.appendChild(galeryPhotograph);
-
-          // Création d'un élément individuel de la galerie
+          // Création de l'élément qui représentera un média dans la galerie.
+          // Il est accessible au clavier et lisible par un lecteur d'écran grâce à :
+          // - `role="listitem"` : indique que cet élément fait partie d'une liste.
+          // - `aria-label` : fournit un texte descriptif pour l'assistance vocale.
+          // - `tabindex="0"` : rend l'élément focusable avec la touche Tab.
           const elementGalery = document.createElement("div");
           elementGalery.classList.add("element_galery");
           elementGalery.setAttribute("role", "listitem");
-          elementGalery.setAttribute(
-            "aria-label",
-            `Conteneur du média ${title}`
-          );
+          elementGalery.setAttribute("aria-label", `Média : ${title}`);
           elementGalery.setAttribute("tabindex", "0");
-          galeryPhotograph.appendChild(elementGalery);
+          sectionGalery.appendChild(elementGalery);
 
           if (image) {
             const img = document.createElement("img");

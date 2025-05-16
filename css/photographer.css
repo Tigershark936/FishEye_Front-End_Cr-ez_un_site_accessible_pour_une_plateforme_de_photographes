@@ -155,10 +155,17 @@ main {
   flex-wrap: wrap;
   gap: 20px 95px;
 }
+.galery[role=list] {
+  display: flex;
+  flex-wrap: wrap;
+}
 .galery .element_galery {
   width: 350px;
   height: 351px;
   overflow: hidden;
+}
+.galery .element_galery[role=listitem] {
+  list-style: none;
 }
 .galery .element_galery img, .galery .element_galery video {
   width: 350px;
